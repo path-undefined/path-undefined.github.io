@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "publish": "npm run build && rm -rf docs && mv dist docs"
   },
   "dependencies": {
     "core-js": "^3.6.5",
