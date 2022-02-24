@@ -1,4 +1,4 @@
-import { LanguageCode, MultiLanguageContent } from '@/types/Language';
+import { LanguageCode, MultiLanguageContent } from './Language.types';
 
 export function multiLanguageContent<T>(
   content: MultiLanguageContent<T>,

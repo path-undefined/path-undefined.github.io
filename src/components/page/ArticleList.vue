@@ -1,17 +1,61 @@
 <template>
-  <div class="article-list">
-    This is an article list.
-    {{ pageConfig }} {{ websiteConfig }} {{ websiteStatus }}
+  <div
+    v-if="articleListConfigs.length !== 0"
+    class="article-list"
+  >
+    <h1 class="article-list__title u-page-title">
+      {{ getMultiLanguageContent(pageConfig.i18n.pageTitle) }}
+    </h1>
+
+    <div class="article-list__list">
+      <div
+        v-for="article in allArticles"
+        :key="article.articleConfigPath"
+        class="article-list__item"
+      >
+        <div class="article-list__item-date">
+          {{ article.date }}
+        </div>
+
+        <h2 class="article-list__item-title">
+          {{ getMultiLanguageContent(article.title) }}
+        </h2>
+
+        <img
+          v-if="article.thumbnailImageUrl"
+          class="article-list__item-thumbnail-image"
+          :src="article.thumbnailImageUrl"
+          :alt="`Thumbnail of ${article.title}`"
+        />
+
+        <p class="article-list__item-excerpt">
+          {{ getMultiLanguageContent(article.excerpt) }}
+        </p>
+
+        <router-link
+          class="article-list__item-link u-fancy-link u-fancy-link--current"
+          :to="{
+            path: `/${websiteStatus.currentLanguage}/article`,
+            query: { articleConfigPath: article.articleConfigPath },
+          }"
+        >
+          {{ getMultiLanguageContent(pageConfig.i18n.articleLinkLabel) }}
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
-import { WebsiteConfig } from '@/types/WebsiteConfig';
-import { WebsiteStatus } from '@/types/WebsiteStatus';
+import { httpService } from '@/services/HttpService';
+import { multiLanguageContent } from '@/services/Language';
+import { MultiLanguageContent } from '@/services/Language.types';
 
-import { ArticleListPageConfig } from './ArticleList.config';
+import { WebsiteConfig, WebsiteStatus } from '@/components/website/Website.types';
+
+import { ArticleListConfig, ArticleListPageConfig } from './ArticleList.types';
 
 export default defineComponent({
   name: 'ArticleList',
@@ -21,8 +65,74 @@ export default defineComponent({
     websiteConfig: { type: Object as PropType<WebsiteConfig>, required: true },
     websiteStatus: { type: Object as PropType<WebsiteStatus>, required: true },
   },
+
+  data() {
+    return {
+      articleListConfigs: [] as ArticleListConfig[],
+    };
+  },
+
+  computed: {
+    allArticles() {
+      return this.articleListConfigs.flatMap((config) => config.articles);
+    },
+  },
+
+  async created() {
+    this.reload();
+  },
+
+  methods: {
+    getMultiLanguageContent<T>(value: MultiLanguageContent<T>): T {
+      return multiLanguageContent<T>(
+        value,
+        this.websiteStatus.currentLanguage,
+        this.websiteConfig.languages.fallbackOrder,
+      );
+    },
+
+    async reload() {
+      const promises = this.pageConfig.articleListConfigPaths
+        .map((path) => httpService.getJson<ArticleListConfig>(path));
+      this.articleListConfigs = await Promise.all(promises);
+    },
+  },
 });
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/variables";
+
+.article-list {
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+  }
+
+  &__item-date {
+    font-size: 14px;
+  }
+
+  &__item-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 32px;
+    text-transform: uppercase;
+  }
+
+  &__item-thumbnail-image {
+    display: block;
+  }
+
+  &__item-excerpt {
+    font-size: 18px;
+  }
+
+  &__item-link {
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+}
 </style>

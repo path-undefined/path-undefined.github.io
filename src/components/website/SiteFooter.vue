@@ -1,6 +1,6 @@
 <template>
-  <footer class="page-footer">
-    <p class="page-footer__copyright">
+  <footer class="site-footer">
+    <p class="site-footer__copyright">
       Except where otherwise noted, this website itself is licensed under
       <a href="https://github.com/path-undefined/path-undefined.github.io/blob/main/LICENSE">GNU General Public License v3.0</a>,
       and the content of the website is licensed under
@@ -13,14 +13,15 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'PageFooter',
+  name: 'SiteFooter',
 });
 </script>
 
 <style lang="scss" scoped>
-.page-footer {
+.site-footer {
   &__copyright {
-    margin-top: 100px;
+    margin-top: 160px;
+    margin-bottom: 40px;
     font-size: 12px;
   }
 }

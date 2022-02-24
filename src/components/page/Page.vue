@@ -1,8 +1,10 @@
 <template>
-  <main class="page-content">
+  <main
+    v-if="pageConfig"
+    class="page"
+  >
     <component
-      v-if="pageConfig['@type']"
-      class="page-content__page"
+      class="page__page"
       :is="pageConfig['@type']"
       :pageConfig="pageConfig"
       :websiteConfig="websiteConfig"
@@ -15,24 +17,22 @@
 import { defineComponent, PropType } from 'vue';
 
 import { httpService } from '@/services/HttpService';
-import { multiLanguageContent } from '@/services/MultiLanguageContent';
+import { multiLanguageContent } from '@/services/Language';
+import { MultiLanguageContent } from '@/services/Language.types';
+import { Nullable } from '@/services/Utility.types';
 
-import { MultiLanguageContent } from '@/types/Language';
-import { WebsiteConfig } from '@/types/WebsiteConfig';
-import { WebsiteStatus } from '@/types/WebsiteStatus';
-import { PageConfig } from '@/types/PageConfig';
+import { WebsiteConfig, WebsiteStatus } from '@/components/website/Website.types';
 
-import Article from '@/components/page/Article.vue';
-import ArticleList from '@/components/page/ArticleList.vue';
+import { PageConfig } from './Page.types';
+import Article from './Article.vue';
+import ArticleList from './ArticleList.vue';
 
 export default defineComponent({
   name: 'PageContent',
 
   components: {
-    /* eslint-disable vue/no-unused-components */
     Article,
     ArticleList,
-    /* eslint-enable vue/no-unused-components */
   },
 
   props: {
@@ -42,24 +42,18 @@ export default defineComponent({
 
   data() {
     return {
-      pageConfig: {
-        '@type': 'article-list',
-        'attributes': {
-          articlesPerPage: 0,
-          articleListConfigPaths: [],
-        },
-      } as PageConfig,
+      pageConfig: null as Nullable<PageConfig>,
     };
   },
 
   watch: {
     websiteStatus() {
-      this.updatePageConfig();
+      this.reload();
     },
   },
 
   async created() {
-    this.updatePageConfig();
+    this.reload();
   },
 
   methods: {
@@ -71,13 +65,11 @@ export default defineComponent({
       );
     },
 
-    async updatePageConfig() {
+    async reload() {
       const currentPage = this.websiteConfig.pages.find((page) => page.name === this.websiteStatus.currentPage);
       if (!currentPage) {
         return;
       }
-
-      console.log(JSON.stringify(currentPage));
 
       this.pageConfig = await httpService.getJson(currentPage.pageConfigPath);
     },
@@ -86,9 +78,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.page-content {
+.page {
   &__page {
-    margin-top: 100px;
+    margin-top: 80px;
   }
 }
 </style>

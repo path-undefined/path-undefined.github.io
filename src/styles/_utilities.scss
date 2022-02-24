@@ -1,0 +1,24 @@
+.u-page-title {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  color: $color-accent;
+  font-size: 48px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.u-fancy-link {
+  display: inline-block;
+  color: $color-primary;
+  text-decoration: none;
+  border-bottom: 4px solid transparent;
+
+  &:hover {
+    border-bottom: 4px solid $color-accent;
+  }
+
+  &--current {
+    border-bottom: 4px solid $color-accent;
+    font-weight: 700;
+  }
+}

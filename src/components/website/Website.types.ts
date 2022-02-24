@@ -1,4 +1,4 @@
-import { LanguageCode, MultiLanguageContent } from './Language';
+import { LanguageCode, MultiLanguageContent } from '@/services/Language.types';
 
 export type WebsiteConfig = {
   languages: WebsiteLanguageConfig;
@@ -17,7 +17,12 @@ type WebsiteLanguageOptions = {
 
 type WebsitePageConfig = {
   name: string;
-  label: MultiLanguageContent<string>;
+  label?: MultiLanguageContent<string>;
   navEntry: boolean;
   pageConfigPath: string;
+};
+
+export type WebsiteStatus = {
+  currentLanguage: LanguageCode;
+  currentPage: string;
 };

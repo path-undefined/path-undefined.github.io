@@ -1,12 +1,12 @@
 <template>
-  <header class="page-header">
-    <div class="page-header__languages">
+  <header class="site-header">
+    <div class="site-header__languages">
       <router-link
         v-for="language in websiteConfig.languages.options"
         :key="language.code"
-        class="page-header__language-link"
+        class="site-header__language-link u-fancy-link"
         :class="{
-          'page-header__language-link--current': websiteStatus.currentLanguage === language.code
+          'u-fancy-link--current': websiteStatus.currentLanguage === language.code
         }"
         :to="`/${language.code}/${websiteStatus.currentPage}`"
       >
@@ -15,23 +15,23 @@
     </div>
 
     <img
-      class="page-header__logo"
+      class="site-header__logo"
       src="@/assets/logo.svg"
       alt="Website Logo"
     />
 
-    <div class="page-header__title">
+    <div class="site-header__title">
       PATH<br />
       UNDEFINED
     </div>
 
-    <nav class="page-header__nav">
+    <nav class="site-header__nav">
       <router-link
-        v-for="page in websiteConfig.pages"
+        v-for="page in navPages"
         :key="page.name"
-        class="page-header__nav-link"
+        class="site-header__nav-link u-fancy-link"
         :class="{
-          'page-header__nav-link--current': websiteStatus.currentPage === page.name
+          'u-fancy-link--current': websiteStatus.currentPage === page.name
         }"
         :to="`/${websiteStatus.currentLanguage}/${page.name}`"
       >
@@ -44,18 +44,23 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
-import { WebsiteConfig } from '@/types/WebsiteConfig';
-import { WebsiteStatus } from '@/types/WebsiteStatus';
+import { multiLanguageContent } from '@/services/Language';
+import { MultiLanguageContent } from '@/services/Language.types';
 
-import { multiLanguageContent } from '@/services/MultiLanguageContent';
-import { MultiLanguageContent } from '@/types/Language';
+import { WebsiteConfig, WebsiteStatus } from './Website.types';
 
 export default defineComponent({
-  name: 'PageHeader',
+  name: 'SiteHeader',
 
   props: {
     websiteConfig: { type: Object as PropType<WebsiteConfig>, required: true },
     websiteStatus: { type: Object as PropType<WebsiteStatus>, required: true },
+  },
+
+  computed: {
+    navPages() {
+      return this.websiteConfig.pages.filter((page) => !!page.label);
+    },
   },
 
   methods: {
@@ -73,34 +78,27 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '~@/styles/variables';
 
-.page-header {
+.site-header {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__language-link {
-    font-size: 16px;
-    color: $color-primary;
-    text-decoration: none;
+    font-size: 14px;
 
     &:not(:last-child) {
       margin-right: 20px;
     }
-
-    &--current {
-      color: $color-accent;
-      font-weight: 700;
-    }
   }
 
   &__logo {
-    margin-top: 140px;
+    margin-top: 100px;
     width: 100px;
     height: 100px;
   }
 
   &__title {
-    margin-top: 30px;
+    margin-top: 10px;
     text-align: center;
     font-size: 32px;
     font-weight: 700;
@@ -112,23 +110,11 @@ export default defineComponent({
   }
 
   &__nav-link {
-    display: inline-block;
     font-size: 20px;
-    color: $color-primary;
-    text-decoration: none;
     text-transform: uppercase;
 
     &:not(:last-child) {
       margin-right: 24px;
-    }
-
-    &:hover {
-      border-bottom: 4px solid $color-accent;
-    }
-
-    &--current {
-      border-bottom: 4px solid $color-accent;
-      font-weight: 700;
     }
   }
 }

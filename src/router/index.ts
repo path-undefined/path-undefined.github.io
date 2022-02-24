@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import Site from '@/components/Site.vue';
+import Website from '@/components/website/Website.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:languageCode?/:pageName?',
-    component: Site,
+    component: Website,
   },
 ];
 
