@@ -78,6 +78,12 @@ export default defineComponent({
     },
   },
 
+  watch: {
+    pageConfig() {
+      this.reload();
+    },
+  },
+
   async created() {
     this.reload();
   },
@@ -124,6 +130,7 @@ export default defineComponent({
 
   &__item-thumbnail-image {
     display: block;
+    width: 100%;
   }
 
   &__item-excerpt {

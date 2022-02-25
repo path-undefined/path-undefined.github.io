@@ -62,6 +62,12 @@ export default defineComponent({
     };
   },
 
+  watch: {
+    pageConfig() {
+      this.reload();
+    },
+  },
+
   async created() {
     this.reload();
   },
