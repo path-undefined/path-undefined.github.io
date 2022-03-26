@@ -29,7 +29,7 @@
         />
 
         <p class="article-list__item-excerpt">
-          {{ getMultiLanguageContent(article.excerpt) }}
+          {{ parseMarkdown(getMultiLanguageContent(article.excerpt)) }}
         </p>
 
         <router-link
@@ -47,6 +47,7 @@
 </template>
 
 <script lang="ts">
+import { marked } from 'marked';
 import { defineComponent, PropType } from 'vue';
 
 import { httpService } from '@/services/HttpService';
@@ -95,6 +96,10 @@ export default defineComponent({
         this.websiteStatus.currentLanguage,
         this.websiteConfig.languages.fallbackOrder,
       );
+    },
+
+    parseMarkdown(source: string): string {
+      return marked.parseInline(source);
     },
 
     async reload() {

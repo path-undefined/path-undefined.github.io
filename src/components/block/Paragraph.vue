@@ -1,11 +1,12 @@
 <template>
   <p
     class="paragraph"
-    v-html="getMultiLanguageContent(blockConfig.content)"
+    v-html="parseMarkdown(getMultiLanguageContent(blockConfig.content))"
   ></p>
 </template>
 
 <script lang="ts">
+import { marked } from 'marked';
 import { defineComponent, PropType } from 'vue';
 
 import { multiLanguageContent } from '@/services/Language';
@@ -31,6 +32,10 @@ export default defineComponent({
         this.websiteStatus.currentLanguage,
         this.websiteConfig.languages.fallbackOrder,
       );
+    },
+
+    parseMarkdown(source: string): string {
+      return marked.parseInline(source);
     },
   },
 });
