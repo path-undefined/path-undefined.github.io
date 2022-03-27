@@ -1,12 +1,17 @@
 <template>
-  <p
-    class="paragraph"
-    v-html="parseMarkdown(getMultiLanguageContent(blockConfig.content))"
-  ></p>
+  <figure class="picture">
+    <img
+      class="picture__image"
+      :src="blockConfig.url"
+      :alt="getMultiLanguageContent(blockConfig.description)"
+    />
+    <figcaption class="picture__description">
+      {{ getMultiLanguageContent(blockConfig.description) }}
+    </figcaption>
+  </figure>
 </template>
 
 <script lang="ts">
-import { marked } from 'marked';
 import { defineComponent, PropType } from 'vue';
 
 import { multiLanguageContent } from '@/services/Language';
@@ -14,13 +19,13 @@ import { MultiLanguageContent } from '@/services/Language.types';
 
 import { WebsiteConfig, WebsiteStatus } from '@/components/website/Website.types';
 
-import { ParagraphBlockConfig } from './Paragraph.types';
+import { PictureBlockConfig } from './Picture.types';
 
 export default defineComponent({
-  name: 'Paragraph',
+  name: 'picture',
 
   props: {
-    blockConfig: { type: Object as PropType<ParagraphBlockConfig>, required: true },
+    blockConfig: { type: Object as PropType<PictureBlockConfig>, required: true },
     websiteConfig: { type: Object as PropType<WebsiteConfig>, required: true },
     websiteStatus: { type: Object as PropType<WebsiteStatus>, required: true },
   },
@@ -33,16 +38,22 @@ export default defineComponent({
         this.websiteConfig.languages.fallbackOrder,
       );
     },
-
-    parseMarkdown(source: string): string {
-      return marked.parseInline(source);
-    },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.paragraph {
-  font-size: 18px;
+.picture {
+  margin: 18px 0;
+
+  &__image {
+    display: block;
+  }
+
+  &__description {
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
 }
 </style>

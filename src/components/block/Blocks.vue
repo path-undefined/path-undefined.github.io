@@ -22,6 +22,7 @@ import { WebsiteConfig, WebsiteStatus } from '@/components/website/Website.types
 
 import Headline from './Headline.vue';
 import Paragraph from './Paragraph.vue';
+import Picture from './Picture.vue';
 import { BlockConfig } from './Block.types';
 
 export default defineComponent({
@@ -30,6 +31,7 @@ export default defineComponent({
   components: {
     Headline,
     Paragraph,
+    Picture,
   },
 
   props: {
