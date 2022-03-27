@@ -8,7 +8,7 @@
         :class="{
           'u-fancy-link--current': websiteStatus.currentLanguage === language.code
         }"
-        :to="`/${language.code}/${websiteStatus.currentPage}`"
+        :to="{ path: `/${language.code}/${websiteStatus.currentPage}`, query: $route.query }"
       >
         {{ language.label }}
       </router-link>
@@ -33,7 +33,7 @@
         :class="{
           'u-fancy-link--current': websiteStatus.currentPage === page.name
         }"
-        :to="`/${websiteStatus.currentLanguage}/${page.name}`"
+        :to="{ path: `/${websiteStatus.currentLanguage}/${page.name}` }"
       >
         {{ getMultiLanguageContent(page.label) }}
       </router-link>
