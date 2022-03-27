@@ -43,6 +43,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .paragraph {
+  margin: 36px 0;
   font-size: 18px;
 }
 </style>

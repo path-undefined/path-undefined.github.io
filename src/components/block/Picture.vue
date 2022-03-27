@@ -44,10 +44,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .picture {
-  margin: 18px 0;
+  margin: 36px 0;
 
   &__image {
     display: block;
+    max-width: 100%;
   }
 
   &__description {
