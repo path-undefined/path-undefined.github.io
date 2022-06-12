@@ -28,9 +28,10 @@
           :alt="`Thumbnail of ${article.title}`"
         />
 
-        <p class="article-list__item-excerpt">
-          {{ parseMarkdown(getMultiLanguageContent(article.excerpt)) }}
-        </p>
+        <p
+          class="article-list__item-excerpt"
+          v-html="parseMarkdown(getMultiLanguageContent(article.excerpt))"
+        />
 
         <router-link
           class="article-list__item-link u-fancy-link u-fancy-link--current"
@@ -99,6 +100,7 @@ export default defineComponent({
     },
 
     parseMarkdown(source: string): string {
+      console.log(marked.parseInline(source));
       return marked.parseInline(source);
     },
 
