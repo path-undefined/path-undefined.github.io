@@ -132,6 +132,7 @@ export default defineComponent({
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 32px;
+    text-align: center;
     text-transform: uppercase;
   }
 
