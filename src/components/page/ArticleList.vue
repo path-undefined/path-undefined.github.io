@@ -100,7 +100,6 @@ export default defineComponent({
     },
 
     parseMarkdown(source: string): string {
-      console.log(marked.parseInline(source));
       return marked.parseInline(source);
     },
 
