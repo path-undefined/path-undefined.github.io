@@ -92,7 +92,7 @@ export default defineComponent({
   }
 
   &__logo {
-    margin-top: 100px;
+    margin-top: 50px;
     width: 100px;
     height: 100px;
   }
@@ -106,7 +106,7 @@ export default defineComponent({
   }
 
   &__nav {
-    margin-top: 60px;
+    margin-top: 40px;
   }
 
   &__nav-link {

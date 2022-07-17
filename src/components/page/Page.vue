@@ -80,7 +80,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .page {
   &__page {
-    margin-top: 80px;
+    margin-top: 100px;
   }
 }
 </style>

@@ -8,18 +8,22 @@
     </h1>
 
     <div class="article-list__list">
-      <div
+      <router-link
         v-for="article in allArticles"
         :key="article.articleConfigPath"
         class="article-list__item"
+        :to="{
+          path: `/${websiteStatus.currentLanguage}/article`,
+          query: { articleConfigPath: article.articleConfigPath },
+        }"
       >
         <div class="article-list__item-date">
           {{ article.date }}
         </div>
 
-        <h2 class="article-list__item-title">
+        <div class="article-list__item-title">
           {{ getMultiLanguageContent(article.title) }}
-        </h2>
+        </div>
 
         <img
           v-if="article.thumbnailImageUrl"
@@ -33,16 +37,12 @@
           v-html="parseMarkdown(getMultiLanguageContent(article.excerpt))"
         />
 
-        <router-link
+        <div
           class="article-list__item-link u-fancy-link u-fancy-link--current"
-          :to="{
-            path: `/${websiteStatus.currentLanguage}/article`,
-            query: { articleConfigPath: article.articleConfigPath },
-          }"
         >
           {{ getMultiLanguageContent(pageConfig.i18n.articleLinkLabel) }}
-        </router-link>
-      </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -120,7 +120,12 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 100px;
+
+    color: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
   }
 
   &__item-date {
@@ -131,6 +136,7 @@ export default defineComponent({
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 32px;
+    font-weight: bold;
     text-align: center;
     text-transform: uppercase;
   }
