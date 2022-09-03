@@ -1,0 +1,118 @@
+/// Color ///
+$color-primary: #464848;
+$color-secondary: #ffffff;
+$color-accent: #49a078;
+
+/// Typography ///
+$font-family-default: "Open Sans";
+
+@mixin typography-heading {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@mixin typography-label {
+  text-transform: uppercase;
+}
+
+@mixin typography-size-xxl {
+  font-size: 36px;
+  line-height: 46px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 48px;
+    line-height: 58px;
+  }
+}
+
+@mixin typography-size-xl {
+  font-size: 26px;
+  line-height: 36px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 32px;
+    line-height: 42px;
+  }
+}
+
+@mixin typography-size-l {
+  font-size: 22px;
+  line-height: 32px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 26px;
+    line-height: 36px;
+  }
+}
+
+@mixin typography-size-m {
+  font-size: 18px;
+  line-height: 28px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@mixin typography-size-s {
+  font-size: 16px;
+  line-height: 26px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+@mixin typography-size-xs {
+  font-size: 14px;
+  line-height: 24px;
+
+  @include media-larger-than($media-breakpoint-main) {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
+
+/// Media Query ///
+$media-breakpoint-main: 600px;
+
+@mixin media-larger-than($bp) {
+  @media screen and (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin media-smaller-than($bp) {
+  @media screen and (max-width: ($bp - 1px)) {
+    @content;
+  }
+}
+
+/// Spacing ///
+@function spacing($unit) {
+  @return $unit * 8px;
+}
+
+/// Animation ///
+$transition-time: 0.2s;
+
+/// Emphasize ///
+@mixin emphasized-neutral {
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-bottom: spacing(0.5) solid transparent;
+}
+
+@mixin emphasized-default {
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-bottom: spacing(0.5) solid $color-accent;
+}
+
+@mixin emphasized-strong {
+  color: $color-secondary;
+  background-color: $color-primary;
+  border-bottom: spacing(0.5) solid $color-accent;
+}

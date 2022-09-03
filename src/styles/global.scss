@@ -1,0 +1,23 @@
+@import '@/styles/tokens';
+
+body {
+  color: $color-primary;
+  font-family: $font-family-default;
+  @include typography-size-s;
+}
+
+h5,
+h6 {
+  // Don't use h5 and h6
+  display: none;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: underline;
+}
+
+ul,
+ol {
+  list-style: none;
+}
