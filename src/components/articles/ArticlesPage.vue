@@ -186,5 +186,24 @@ export default defineComponent({
       padding: 0 spacing(2);
     }
   }
+
+  &__load-more {
+    @include typography-heading;
+    @include typography-size-m;
+    @include emphasized-strong;
+    margin-top: spacing(8);
+    padding: 0 spacing(1);
+    cursor: pointer;
+
+    transition: $transition-time;
+
+    &:hover {
+      padding: 0 spacing(2);
+    }
+
+    &:active {
+      padding: 0 spacing(3);
+    }
+  }
 }
 </style>
