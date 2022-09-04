@@ -1,6 +1,18 @@
 <template>
   <footer class="site-footer">
     <hr class="site-footer__splitter" />
+
+    <p class="site-footer__copyright">
+      Except where otherwise noted, the website itself is licensed under
+      <a href="https://github.com/path-undefined/path-undefined.github.io/blob/main/LICENSE">
+        GNU General Public License v3.0
+      </a>,
+      and the content of the website is licensed under
+      <a href="https://github.com/path-undefined/blog-content/blob/main/LICENSE">
+        Creative Commons Attribution 4.0 International (CC BY 4.0)
+      </a>.
+    </p>
+
     <div class="site-footer__external-links">
       <a
         class="site-footer__external-link"
@@ -21,16 +33,6 @@
         <span class="site-footer__external-link-text">Content</span>
       </a>
     </div>
-    <p class="site-footer__copyright">
-      Except where otherwise noted, the website itself is licensed under
-      <a href="https://github.com/path-undefined/path-undefined.github.io/blob/main/LICENSE">
-        GNU General Public License v3.0
-      </a>,
-      and the content of the website is licensed under
-      <a href="https://github.com/path-undefined/blog-content/blob/main/LICENSE">
-        Creative Commons Attribution 4.0 International (CC BY 4.0)
-      </a>.
-    </p>
   </footer>
 </template>
 
@@ -53,6 +55,11 @@
     background-color: $color-primary;
   }
 
+  &__copyright {
+    @include typography-size-xs;
+    margin-top: spacing(8);
+  }
+
   &__external-links {
     display: flex;
     flex-direction: column;
@@ -62,7 +69,7 @@
     align-items: center;
     justify-content: space-around;
 
-    margin-top: spacing(10);
+    margin-top: spacing(4);
     width: 100%;
   }
 
@@ -91,19 +98,14 @@
     }
 
     &-icon {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
     }
 
     &-text {
       @include typography-size-xs;
       color: $color-primary;
     }
-  }
-
-  &__copyright {
-    @include typography-size-xs;
-    margin-top: spacing(4);
   }
 }
 </style>
