@@ -76,7 +76,7 @@ $font-family-default: "Open Sans";
 }
 
 /// Media Query ///
-$media-breakpoint-main: 600px;
+$media-breakpoint-main: 400px;
 
 @mixin media-larger-than($bp) {
   @media screen and (min-width: $bp) {
