@@ -19,22 +19,28 @@
         href="https://github.com/path-undefined/path-undefined.github.io"
         target="_blank"
       >
-        <img
-          class="site-footer__external-link-icon"
-          src="@/assets/github-logo.svg"
-        />
+        <GithubLogo class="site-footer__external-link-icon" />
         <span class="site-footer__external-link-text">Website</span>
       </a>
       <a class="site-footer__external-link" href="https://github.com/path-undefined/blog-content" target="_blank">
-        <img
-          class="site-footer__external-link-icon"
-          src="@/assets/github-logo.svg"
-        />
+        <GithubLogo class="site-footer__external-link-icon" />
         <span class="site-footer__external-link-text">Content</span>
       </a>
     </div>
   </footer>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+import GithubLogo from '@/components/common/svg/GithubLogo.vue';
+
+export default defineComponent({
+  components: {
+    GithubLogo,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 @import '@/styles/tokens';
@@ -81,6 +87,7 @@
     margin: spacing(1) 0;
     padding: 0;
 
+    color: $color-primary;
     text-decoration: none;
 
     transition: $transition-time;
@@ -104,7 +111,6 @@
 
     &-text {
       @include typography-size-xs;
-      color: $color-primary;
     }
   }
 }

@@ -59,7 +59,7 @@ import { RouterLink, useRoute } from 'vue-router';
 import { useGlobalState } from '@/services/GlobalState';
 import { useI18n } from '@/services/I18n';
 
-import SiteLogo from './SiteLogo.vue';
+import SiteLogo from '@/components/common/svg/SiteLogo.vue';
 import SiteMenuButton from './SiteMenuButton.vue';
 
 import type { WebsitePageConfig } from '@/types/WebsiteConfig.types';

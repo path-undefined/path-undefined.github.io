@@ -6,8 +6,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens.scss';
-
 .site-logo {
   display: block;
   fill: currentColor;
