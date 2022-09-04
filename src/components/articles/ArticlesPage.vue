@@ -105,11 +105,12 @@ export default defineComponent({
           }
         }
 
-        articles.push(cachedArticles.shift()!);
-      }
+        if (cachedArticles.length === 0 && !nextArticleConfigPath) {
+          hasMoreArticles.value = false;
+          break;
+        }
 
-      if (cachedArticles.length === 0 && !nextArticleConfigPath) {
-        hasMoreArticles.value = false;
+        articles.push(cachedArticles.shift()!);
       }
     };
 
