@@ -154,14 +154,29 @@ export default defineComponent({
   }
 
   &__nav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include media-larger-than($media-breakpoint-main) {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
     width: 100%;
     height: 0;
+
     overflow-y: hidden;
+
     transition: $transition-time;
   }
 
   &--nav-opened &__nav-container {
-    height: 400px;
+    height: calc(46px * 4 + 32px + 46px * 2 + 32px);
+
+    @include media-larger-than($media-breakpoint-main) {
+      height: calc(46px * 4 + 32px);
+    }
   }
 
   &__nav {
