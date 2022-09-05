@@ -37,8 +37,12 @@ export type ArticleParagraphBlockConfig = {
   content: I18nContent<string>;
 };
 
-export type ArticlePictureBlockConfig = {
-  type: 'PictureBlock';
+export type ArticleImageBlockConfig = {
+  type: 'ImageBlock';
   url: string;
+  size: {
+    width: number;
+    height: number;
+  };
   description: I18nContent<string>;
 };
