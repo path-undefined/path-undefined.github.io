@@ -24,7 +24,7 @@ export type ArticleLocationConfig = {
 export type ArticleBlockConfig =
   ArticleHeadingBlockConfig |
   ArticleParagraphBlockConfig |
-  ArticlePictureBlockConfig;
+  ArticleImageBlockConfig;
 
 export type ArticleHeadingBlockConfig = {
   type: 'HeadingBlock';
