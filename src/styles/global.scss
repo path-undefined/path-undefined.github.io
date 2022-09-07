@@ -21,3 +21,12 @@ ul,
 ol {
   list-style: none;
 }
+
+// Remove the blue background while tapping the button
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
