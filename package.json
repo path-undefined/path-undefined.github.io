@@ -8,7 +8,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "publish": "rm -rf docs dist && npm run build && mv dist docs"
+    "release": "rm -rf docs dist && npm run build && mv dist docs",
+    "release-and-publish": "npm run release && git commit -a -m 'Built the new artifact.' && git push origin main"
   },
   "dependencies": {
     "marked": "^4.1.0",
