@@ -43,6 +43,6 @@ export default defineComponent({
 @import '@/styles/tokens';
 
 .paragraph-block {
-  margin: spacing(4) 0;
+  margin: spacing(5) 0;
 }
 </style>

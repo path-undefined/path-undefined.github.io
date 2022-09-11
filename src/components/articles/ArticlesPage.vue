@@ -22,17 +22,19 @@
           {{ i18n(article.title) }}
         </div>
 
-        <img
-          class="articles-page__item-thumbnail-image"
-          v-if="article.thumbnailImageUrl"
-          :src="article.thumbnailImageUrl"
-          :alt="`Thumbnail of ${article.title}`"
-        />
+        <div class="articles-page__item-thumbnail-container">
+          <img
+            class="articles-page__item-thumbnail-image"
+            v-if="article.thumbnailImageUrl"
+            :src="baseUrl + article.thumbnailImageUrl"
+            :alt="`Thumbnail of ${article.title}`"
+          />
+        </div>
 
         <p
           class="articles-page__item-excerpt"
           v-html="parseMarkdown(i18n(article.excerpt))"
-        />
+        ></p>
 
         <div class="articles-page__item-read-more">
           {{ i18n(pageConfig.i18n.readMoreLabel) }}
@@ -86,6 +88,8 @@ export default defineComponent({
     const articles = shallowReactive<ArticlesArticleConfig[]>([]);
     const hasMoreArticles = ref<boolean>(true);
 
+    const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
+
     let cachedArticles: ArticlesArticleConfig[] = [];
     // eslint-disable-next-line vue/no-setup-props-destructure
     let nextArticleConfigPath: string | undefined = props.pageConfig.articlesConfigPath;
@@ -125,6 +129,8 @@ export default defineComponent({
       articles,
       hasMoreArticles,
       loadMore,
+
+      baseUrl,
     };
   },
 });
@@ -160,10 +166,24 @@ export default defineComponent({
       text-align: center;
     }
 
-    &-thumbnail-image {
-      display: block;
+    &-thumbnail-container {
+      position: relative;
       margin-top: spacing(3);
       width: 100%;
+
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+
+    &-thumbnail-image {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     &-excerpt {

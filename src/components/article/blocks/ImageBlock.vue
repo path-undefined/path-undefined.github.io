@@ -5,15 +5,15 @@
       'image-block--thumbnails': !isFullscreen,
       'image-block--fullscreen': isFullscreen
     }"
+    ref="containerRef"
+    @click="toggleFullscreen"
   >
-    <div class="image-block__image-container">
-      <img
-        class="image-block__image"
-        :src="blockConfig.url"
-        :alt="i18n(blockConfig.description)"
-        @click="toggleFullscreen"
-      />
-    </div>
+    <img
+      class="image-block__image"
+      ref="imageRef"
+      :src="baseUrl + blockConfig.url"
+      :alt="i18n(blockConfig.description)"
+    />
     <figcaption class="image-block__description">
       {{ i18n(blockConfig.description) }}
     </figcaption>
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useGlobalState } from '@/services/GlobalState';
@@ -43,16 +43,47 @@ export default defineComponent({
     const globalState = useGlobalState(route);
     const i18n = useI18n(globalState);
 
+    const containerRef = ref<HTMLDivElement>();
+    const imageRef = ref<HTMLImageElement>();
+
+    const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
+
     const isFullscreen = ref(false);
+
+    const setImageMaxDimension = () => {
+      if (isFullscreen.value) {
+        imageRef.value!.style.maxWidth = `${containerRef.value!.clientWidth}px`;
+        imageRef.value!.style.maxHeight = `${containerRef.value!.clientHeight}px`;
+      } else {
+        imageRef.value!.style.maxWidth = `${containerRef.value!.clientWidth}px`;
+        imageRef.value!.style.maxHeight = `${containerRef.value!.clientWidth}px`;
+      }
+    };
 
     const toggleFullscreen = () => {
       isFullscreen.value = !isFullscreen.value;
+      nextTick(() => {
+        setImageMaxDimension();
+      });
     };
 
+    onMounted(() => {
+      setImageMaxDimension();
+      window.addEventListener('resize', setImageMaxDimension);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', setImageMaxDimension);
+    });
+
     return {
+      baseUrl,
       isFullscreen,
       toggleFullscreen,
       i18n,
+
+      containerRef,
+      imageRef,
     };
   },
 });
@@ -62,52 +93,35 @@ export default defineComponent({
 @import '@/styles/tokens';
 
 .image-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: spacing(5) 0;
+
+  &__image {
+    display: block;
+  }
+
   &--thumbnails {
     cursor: zoom-in;
   }
 
-  &--thumbnails &__image-container {
-    position: relative;
-
-    &::after {
-      content: "";
-      display: block;
-      padding-bottom: 100%;
-    }
-  }
-
-  &--thumbnails &__image {
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   &--thumbnails &__description {
     @include typography-size-xs;
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    text-align: center;
   }
 
   &--fullscreen {
     cursor: zoom-out;
-  }
-
-  &--fullscreen &__image-container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: $color-primary;
-  }
-
-  &--fullscreen &__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
   }
 
   &--fullscreen &__description {

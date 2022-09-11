@@ -43,7 +43,7 @@
             <RouterLink
               class="site-header__nav-link"
               :class="{ 'site-header__nav-link--current': language.code === currentLanguageCode }"
-              :to="{ path: `/${language.code}/${currentPageName}` }"
+              :to="{ path: `/${language.code}/${currentPageName}`, query: currentQueryParams }"
             >{{ language.label }}</RouterLink>
           </li>
         </ul>
@@ -93,6 +93,8 @@ export default defineComponent({
     const languages = computed(() =>
       globalState.websiteConfig.value?.languages.options);
 
+    const currentQueryParams = computed(() => route.query);
+
     return {
       i18n,
 
@@ -103,6 +105,7 @@ export default defineComponent({
       languages,
       currentLanguageCode: globalState.currentLanguageCode,
       currentPageName: globalState.currentPageName,
+      currentQueryParams,
     };
   },
 });

@@ -47,7 +47,7 @@ h2.heading-block,
 h3.heading-block,
 h4.heading-block {
   @include typography-heading;
-  margin: spacing(8) 0 spacing(4) 0;
+  margin: spacing(8) 0 spacing(5) 0;
   color: $color-accent;
 }
 
