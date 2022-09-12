@@ -98,14 +98,13 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
-  margin: spacing(5) 0;
-
   &__image {
     display: block;
   }
 
   &--thumbnails {
     cursor: zoom-in;
+    margin: spacing(5) 0;
   }
 
   &--thumbnails &__description {
@@ -115,13 +114,13 @@ export default defineComponent({
   }
 
   &--fullscreen {
-    cursor: zoom-out;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background-color: $color-primary;
+    cursor: zoom-out;
   }
 
   &--fullscreen &__description {
