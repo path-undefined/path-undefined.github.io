@@ -24,7 +24,8 @@ export type ArticleLocationConfig = {
 export type ArticleBlockConfig =
   ArticleHeadingBlockConfig |
   ArticleParagraphBlockConfig |
-  ArticleImageBlockConfig;
+  ArticleImageBlockConfig |
+  ArticleListBlockConfig;
 
 export type ArticleHeadingBlockConfig = {
   type: 'HeadingBlock';
@@ -45,4 +46,17 @@ export type ArticleImageBlockConfig = {
     height: number;
   };
   description: I18nContent<string>;
+};
+
+export type ArticleListBlockConfig = {
+  type: 'ListBlock';
+} & ArticleListBlockBaseListConfig;
+
+export type ArticleListBlockSubListConfig = {
+  text: I18nContent<string>;
+} & ArticleListBlockBaseListConfig;
+
+type ArticleListBlockBaseListConfig = {
+  variant: 'ordered' | 'unordered';
+  items: (I18nContent<string> | ArticleListBlockSubListConfig)[];
 };

@@ -48,6 +48,7 @@ import PageTitle from '@/components/common/PageTitle.vue';
 import HeadingBlock from './blocks/HeadingBlock.vue';
 import ParagraphBlock from './blocks/ParagraphBlock.vue';
 import ImageBlock from './blocks/ImageBlock.vue';
+import ListBlock from './blocks/ListBlock.vue';
 
 import type { PropType } from 'vue';
 import type { ArticlePageConfig } from '@/types/PageConfig.types';
@@ -60,6 +61,7 @@ export default defineComponent({
     HeadingBlock,
     ParagraphBlock,
     ImageBlock,
+    ListBlock,
   },
 
   props: {
