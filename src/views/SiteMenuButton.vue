@@ -4,9 +4,12 @@
     :class="{ 'site-menu-button--close': close }"
     @click="onClick"
   >
-    <div class="site-menu-button__strip-1" />
-    <div class="site-menu-button__strip-2" />
-    <div class="site-menu-button__strip-3" />
+    <div class="site-menu-button__icon">
+      <div class="site-menu-button__strip-1" />
+      <div class="site-menu-button__strip-2" />
+      <div class="site-menu-button__strip-3" />
+    </div>
+    <div class="site-menu-button__text">Navigation</div>
   </button>
 </template>
 
@@ -39,11 +42,15 @@ export default defineComponent({
 @import '@/styles/tokens';
 
 .site-menu-button {
-  position: relative;
-  display: block;
-  width: 40px;
-  height: 40px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+
+  &__icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+  }
 
   &__strip-1, &__strip-2, &__strip-3 {
     position: absolute;
@@ -87,6 +94,12 @@ export default defineComponent({
 
   &--close &__strip-3 {
     transform: rotate(-135deg);
+  }
+
+  &__text {
+    @include typography-heading;
+    @include typography-size-l;
+    margin-left: spacing(2);
   }
 }
 </style>

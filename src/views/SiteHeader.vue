@@ -151,8 +151,6 @@ export default defineComponent({
 
   &__menu-toggle-button {
     margin-top: spacing(6);
-    width: 40px;
-    height: 40px;
     color: $color-accent;
   }
 
