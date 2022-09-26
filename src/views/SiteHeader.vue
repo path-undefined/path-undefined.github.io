@@ -16,7 +16,10 @@
       @click="toggleNavOpened"
     />
 
-    <div class="site-header__nav-container">
+    <div
+      class="site-header__nav-container"
+      :style="navContainerCssVars"
+    >
       <nav class="site-header__nav">
         <ul class="site-header__nav-list">
           <li
@@ -95,6 +98,11 @@ export default defineComponent({
 
     const currentQueryParams = computed(() => route.query);
 
+    const navContainerCssVars = computed(() => ({
+      '--number-of-pages': pages.value?.length ?? 0,
+      '--number-of-langs': languages.value?.length ?? 0,
+    }));
+
     return {
       i18n,
 
@@ -106,6 +114,8 @@ export default defineComponent({
       currentLanguageCode: globalState.currentLanguageCode,
       currentPageName: globalState.currentPageName,
       currentQueryParams,
+
+      navContainerCssVars,
     };
   },
 });
@@ -174,10 +184,17 @@ export default defineComponent({
   }
 
   &--nav-opened &__nav-container {
-    height: calc(48px * 4 + spacing(4) + 48px * 2 + spacing(4));
+    height: calc(
+      48px * var(--number-of-pages) +
+      spacing(4) +
+      48px * var(--number-of-langs) +
+      spacing(4)
+    );
 
     @include media-larger-than($media-breakpoint-main) {
-      height: calc(48px * 4 + 32px);
+      height: calc(
+        48px * var(--number-of-pages) + spacing(4)
+      );
     }
   }
 
