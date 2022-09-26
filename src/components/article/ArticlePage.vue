@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowRef, watchEffect } from 'vue';
+import { defineComponent, shallowRef, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { fetchConfigJson } from '@/services/Http';
@@ -78,7 +78,7 @@ export default defineComponent({
 
     const articleConfig = shallowRef<ArticleConfig>();
 
-    watchEffect(async () => {
+    onMounted(async () => {
       const articleConfigPath =
         props.pageConfig.articleConfigPath || route.query.articleConfigPath as string;
       articleConfig.value = await fetchConfigJson(articleConfigPath);

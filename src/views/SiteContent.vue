@@ -2,6 +2,7 @@
   <main class="site-content">
     <component
       :is="currentPageConfig?.type"
+      :key="currentPageConfig"
       :pageConfig="currentPageConfig"
     ></component>
   </main>
@@ -53,10 +54,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-@import '@/styles/tokens';
-
-.site-content {
-}
-</style>

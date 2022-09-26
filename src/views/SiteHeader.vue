@@ -173,10 +173,10 @@ export default defineComponent({
   }
 
   &--nav-opened &__nav-container {
-    height: calc(46px * 4 + spacing(4) + 46px * 2 + spacing(4));
+    height: calc(48px * 4 + spacing(4) + 48px * 2 + spacing(4));
 
     @include media-larger-than($media-breakpoint-main) {
-      height: calc(46px * 4 + 32px);
+      height: calc(48px * 4 + 32px);
     }
   }
 
