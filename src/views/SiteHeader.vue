@@ -185,10 +185,8 @@ export default defineComponent({
 
   &--nav-opened &__nav-container {
     height: calc(
-      48px * var(--number-of-pages) +
-      spacing(4) +
-      48px * var(--number-of-langs) +
-      spacing(4)
+      48px * var(--number-of-pages) + spacing(4) +
+      48px * var(--number-of-langs) + spacing(4)
     );
 
     @include media-larger-than($media-breakpoint-main) {
