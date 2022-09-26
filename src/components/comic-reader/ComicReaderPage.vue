@@ -1,12 +1,5 @@
 <template>
-  <div class="comics-page">
-    <PageTitle class="comics-page__title">
-      {{ i18n(pageConfig.i18n.title) }}
-    </PageTitle>
-
-    <p class="comics-page__message">
-      {{ i18n(pageConfig.i18n.message) }}
-    </p>
+  <div class="comic-reader-page">
   </div>
 </template>
 
@@ -17,19 +10,13 @@ import { useRoute } from 'vue-router';
 import { useI18n } from '@/services/I18n';
 import { useGlobalState } from '@/services/GlobalState';
 
-import PageTitle from '@/components/common/PageTitle.vue';
-
 import type { PropType } from 'vue';
-import type { ComicsPageConfig } from '@/types/PageConfig.types';
+import type { ComicReaderPageConfig } from '@/types/PageConfig.types';
 
 export default defineComponent({
-  components: {
-    PageTitle,
-  },
-
   props: {
     pageConfig: {
-      type: Object as PropType<ComicsPageConfig>,
+      type: Object as PropType<ComicReaderPageConfig>,
       required: true,
     },
   },
@@ -49,11 +36,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
 
-.comics-page {
-  &__message {
-    @include typography-size-l;
-    margin-top: spacing(8);
-    text-align: center;
-  }
+.comic-reader-page {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+  background-color: $color-secondary;
 }
 </style>

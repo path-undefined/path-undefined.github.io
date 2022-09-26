@@ -3,17 +3,8 @@ import type { I18nContent } from './I18n.types';
 export type PageConfig =
   ListPageConfig |
   ArticlePageConfig |
-  ComicsPageConfig |
+  ComicReaderPageConfig |
   DestinationsPageConfig;
-
-export type ArticlePageConfig = {
-  type: 'ArticlePage';
-  i18n: {
-    mapLinkLabel: I18nContent<string>;
-    backToListLabel: I18nContent<string>;
-  };
-  articleConfigPath?: string;
-};
 
 export type ListPageConfig = {
   type: 'ListPage';
@@ -26,6 +17,15 @@ export type ListPageConfig = {
   listConfigPath: string;
 };
 
+export type ArticlePageConfig = {
+  type: 'ArticlePage';
+  i18n: {
+    mapLinkLabel: I18nContent<string>;
+    backToListLabel: I18nContent<string>;
+  };
+  articleConfigPath?: string;
+};
+
 export type DestinationsPageConfig = {
   type: 'DestinationsPage';
   i18n: {
@@ -34,10 +34,12 @@ export type DestinationsPageConfig = {
   };
 };
 
-export type ComicsPageConfig = {
-  type: 'ComicsPage';
+export type ComicReaderPageConfig = {
+  type: 'ComicReaderPage';
   i18n: {
-    title: I18nContent<string>;
-    message: I18nContent<string>;
+    backToListLabel: I18nContent<string>;
+    nextPageLabel: I18nContent<string>;
+    prevPageLabel: I18nContent<string>;
+    jumpToLabel: I18nContent<string>;
   };
 };

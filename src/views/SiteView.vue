@@ -37,7 +37,7 @@ export default defineComponent({
 
   &__footer {
     margin-top: spacing(10);
-    margin-bottom: spacing(10);
+    margin-bottom: spacing(12);
   }
 }
 </style>

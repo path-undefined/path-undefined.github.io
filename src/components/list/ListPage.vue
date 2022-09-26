@@ -7,11 +7,11 @@
     <div class="list-page__list">
       <router-link
         class="list-page__item"
-        v-for="item in items"
-        :key="item.itemConfigPath"
+        v-for="item, index in items"
+        :key="index"
         :to="{
-          path: `/${currentLanguageCode}/${item.itemPageName}`,
-          query: { articleConfigPath: item.itemConfigPath }
+          path: `/${currentLanguageCode}/${item.itemUrl.pageName}`,
+          query: item.itemUrl.queries,
         }"
       >
         <div class="list-page__item-date">

@@ -7,6 +7,15 @@
       {{ i18n(articleConfig.title) }}
     </PageTitle>
 
+    <div class="article-page__back-link-container">
+      <router-link
+        class="article-page__back-link"
+        :to="{ path: `/${currentLanguageCode}/articles` }"
+      >
+        {{ i18n(pageConfig.i18n.backToListLabel) }}
+      </router-link>
+    </div>
+
     <div class="article-page__metadata">
       <span class="article-page__metadata-time">
         {{ articleConfig.time.date }}&nbsp;{{ articleConfig.time.time }}&nbsp;({{ articleConfig.time.timeZone }})
@@ -23,15 +32,6 @@
           {{ i18n(pageConfig.i18n.mapLinkLabel) }}
         </a>
       </span>
-    </div>
-
-    <div class="article-page__back-link-container">
-      <router-link
-        class="article-page__back-link"
-        :to="{ path: `/${currentLanguageCode}/articles` }"
-      >
-        {{ i18n(pageConfig.i18n.backToListLabel) }}
-      </router-link>
     </div>
 
     <div class="article-page__blocks">
@@ -118,18 +118,19 @@ export default defineComponent({
 .article-page {
   &__metadata {
     @include typography-size-xs;
-    margin-top: spacing(4);
+    margin-top: spacing(6);
     text-align: center;
   }
 
   &__blocks {
-    margin-top: spacing(8);
+    margin-top: spacing(10);
   }
 
   &__back-link-container {
     display: flex;
     justify-content: center;
-    margin-top: spacing(8);
+    margin-top: spacing(6);
+    width: 100%;
   }
 
   &__back-link {

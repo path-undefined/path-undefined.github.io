@@ -10,6 +10,10 @@ export type ListItemConfig = {
   date: string;
   thumbnailImageUrl?: string;
   excerpt: I18nContent<string>;
-  itemPageName: string;
-  itemConfigPath: string;
+  itemUrl: ListItemUrlConfig;
+};
+
+export type ListItemUrlConfig = {
+  pageName: string;
+  queries: { [key: string]: string };
 };

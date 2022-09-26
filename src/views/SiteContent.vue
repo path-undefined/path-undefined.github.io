@@ -17,7 +17,7 @@ import { fetchConfigJson } from '@/services/Http';
 
 import ListPage from '@/components/list/ListPage.vue';
 import ArticlePage from '@/components/article/ArticlePage.vue';
-import ComicsPage from '@/components/comics/ComicsPage.vue';
+import ComicReaderPage from '@/components/comic-reader/ComicReaderPage.vue';
 import DestinationsPage from '@/components/destinations/DestinationsPage.vue';
 
 import type { PageConfig } from '@/types/PageConfig.types';
@@ -25,9 +25,9 @@ import type { PageConfig } from '@/types/PageConfig.types';
 export default defineComponent({
   components: {
     ListPage,
-    DestinationsPage,
     ArticlePage,
-    ComicsPage,
+    ComicReaderPage,
+    DestinationsPage,
   },
 
   async setup() {
