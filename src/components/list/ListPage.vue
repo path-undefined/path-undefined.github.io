@@ -1,49 +1,49 @@
 <template>
-  <div class="articles-page">
-    <PageTitle class="articles-page__title">
+  <div class="list-page">
+    <PageTitle class="list-page__title">
       {{ i18n(pageConfig.i18n.pageTitle) }}
     </PageTitle>
 
-    <div class="articles-page__list">
+    <div class="list-page__list">
       <router-link
-        class="articles-page__item"
-        v-for="article in articles"
-        :key="article.articleConfigPath"
+        class="list-page__item"
+        v-for="item in items"
+        :key="item.itemConfigPath"
         :to="{
-          path: `/${currentLanguageCode}/article`,
-          query: { articleConfigPath: article.articleConfigPath }
+          path: `/${currentLanguageCode}/${item.itemPageName}`,
+          query: { articleConfigPath: item.itemConfigPath }
         }"
       >
-        <div class="articles-page__item-date">
-          {{ article.date }}
+        <div class="list-page__item-date">
+          {{ item.date }}
         </div>
 
-        <div class="articles-page__item-title">
-          {{ i18n(article.title) }}
+        <div class="list-page__item-title">
+          {{ i18n(item.title) }}
         </div>
 
-        <div class="articles-page__item-thumbnail-container">
+        <div class="list-page__item-thumbnail-container">
           <img
-            class="articles-page__item-thumbnail-image"
-            v-if="article.thumbnailImageUrl"
-            :src="baseUrl + article.thumbnailImageUrl"
-            :alt="`Thumbnail of ${article.title}`"
+            class="list-page__item-thumbnail-image"
+            v-if="item.thumbnailImageUrl"
+            :src="baseUrl + item.thumbnailImageUrl"
+            :alt="`Thumbnail of ${item.title}`"
           />
         </div>
 
         <p
-          class="articles-page__item-excerpt"
-          v-html="parseMarkdown(i18n(article.excerpt))"
+          class="list-page__item-excerpt"
+          v-html="parseMarkdown(i18n(item.excerpt))"
         ></p>
 
-        <div class="articles-page__item-read-more">
+        <div class="list-page__item-read-more">
           {{ i18n(pageConfig.i18n.readMoreLabel) }}
         </div>
       </router-link>
 
       <button
-        class="articles-page__load-more"
-        v-if="hasMoreArticles"
+        class="list-page__load-more"
+        v-if="hasMoreItems"
         @click="loadMore"
       >
         {{ i18n(pageConfig.i18n.loadMoreLabel) }}
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, shallowReactive } from 'vue';
+import { defineComponent, onMounted, ref, shallowRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useI18n } from '@/services/I18n';
@@ -64,8 +64,8 @@ import { useMarkdown } from '@/services/Markdown';
 import PageTitle from '@/components/common/PageTitle.vue';
 
 import type { PropType } from 'vue';
-import type { ArticlesPageConfig } from '@/types/PageConfig.types';
-import type { ArticlesArticleConfig, ArticlesConfig } from '@/types/ArticlesConfig.type';
+import type { ListPageConfig } from '@/types/PageConfig.types';
+import type { ListConfig, ListItemConfig } from '@/types/ListConfig.types';
 
 export default defineComponent({
   components: {
@@ -74,7 +74,7 @@ export default defineComponent({
 
   props: {
     pageConfig: {
-      type: Object as PropType<ArticlesPageConfig>,
+      type: Object as PropType<ListPageConfig>,
       required: true,
     },
   },
@@ -85,40 +85,47 @@ export default defineComponent({
     const i18n = useI18n(globalState);
     const parseMarkdown = useMarkdown();
 
-    const articles = shallowReactive<ArticlesArticleConfig[]>([]);
-    const hasMoreArticles = ref<boolean>(true);
-
     const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
 
-    let cachedArticles: ArticlesArticleConfig[] = [];
+    const items = shallowRef<ListItemConfig[]>([]);
+    const hasMoreItems = ref<boolean>(true);
+
+    let cachedArticles: ListItemConfig[] = [];
     // eslint-disable-next-line vue/no-setup-props-destructure
-    let nextArticleConfigPath: string | undefined = props.pageConfig.articlesConfigPath;
+    let nextArticleConfigPath: string | undefined = props.pageConfig.listConfigPath;
+
+    onMounted(() => {
+      items.value = [];
+      hasMoreItems.value = true;
+      cachedArticles = [];
+      nextArticleConfigPath = props.pageConfig.listConfigPath;
+
+      loadMore();
+    });
 
     const loadMore = async () => {
-      const targetArticleAmount = articles.length + props.pageConfig.articlesPerPage;
+      const targetArticleAmount = items.value.length + props.pageConfig.itemsPerPage;
 
-      while (articles.length < targetArticleAmount) {
+      while (items.value.length < targetArticleAmount) {
         if (cachedArticles.length === 0) {
           if (nextArticleConfigPath) {
-            const articlesConfig = await fetchConfigJson<ArticlesConfig>(nextArticleConfigPath);
-            cachedArticles = cachedArticles.concat(articlesConfig.articles);
+            const articlesConfig = await fetchConfigJson<ListConfig>(nextArticleConfigPath);
+            cachedArticles = cachedArticles.concat(articlesConfig.items);
             nextArticleConfigPath = articlesConfig.nextArticlesConfigPath;
           } else {
-            hasMoreArticles.value = false;
+            hasMoreItems.value = false;
             break;
           }
         }
 
         if (cachedArticles.length === 0 && !nextArticleConfigPath) {
-          hasMoreArticles.value = false;
+          hasMoreItems.value = false;
           break;
         }
 
-        articles.push(cachedArticles.shift()!);
+        items.value.push(cachedArticles.shift()!);
       }
     };
-
-    loadMore();
 
     return {
       i18n,
@@ -126,11 +133,11 @@ export default defineComponent({
 
       currentLanguageCode: globalState.currentLanguageCode,
 
-      articles,
-      hasMoreArticles,
-      loadMore,
-
       baseUrl,
+
+      items,
+      hasMoreItems,
+      loadMore,
     };
   },
 });
@@ -140,7 +147,7 @@ export default defineComponent({
 @import '@/styles/Tokens.scss';
 @import '@/components/common/EmphasizedText.scss';
 
-.articles-page {
+.list-page {
   &__list {
     display: flex;
     flex-direction: column;

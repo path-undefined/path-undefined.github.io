@@ -9,14 +9,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, shallowRef, watchEffect } from 'vue';
+import { computed, defineComponent, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useGlobalState } from '@/services/GlobalState';
 import { fetchConfigJson } from '@/services/Http';
 
+import ListPage from '@/components/list/ListPage.vue';
 import ArticlePage from '@/components/article/ArticlePage.vue';
-import ArticlesPage from '@/components/articles/ArticlesPage.vue';
 import ComicsPage from '@/components/comics/ComicsPage.vue';
 import DestinationsPage from '@/components/destinations/DestinationsPage.vue';
 
@@ -24,12 +24,10 @@ import type { PageConfig } from '@/types/PageConfig.types';
 
 export default defineComponent({
   components: {
-    /* eslint-disable vue/no-unused-components */
-    ArticlePage,
-    ArticlesPage,
-    ComicsPage,
+    ListPage,
     DestinationsPage,
-    /* eslint-enable vue/no-unused-components */
+    ArticlePage,
+    ComicsPage,
   },
 
   async setup() {
@@ -41,11 +39,9 @@ export default defineComponent({
     const currentWebsitePageConfig = computed(() =>
       globalState.websiteConfig.value?.pages.find((page) => page.name === globalState.currentPageName.value));
 
-    watchEffect(async () => {
-      currentPageConfig.value =
-        currentWebsitePageConfig.value
-          ? await fetchConfigJson<PageConfig>(currentWebsitePageConfig.value.pageConfigPath)
-          : undefined;
+    watch(currentWebsitePageConfig, async (config) => {
+      currentPageConfig.value = config ? await fetchConfigJson<PageConfig>(config.pageConfigPath) : undefined;
+      window.scrollTo(0, 0);
     });
 
     return {

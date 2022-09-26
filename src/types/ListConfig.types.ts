@@ -1,14 +1,15 @@
 import type { I18nContent } from './I18n.types';
 
-export type ArticlesConfig = {
-  articles: ArticlesArticleConfig[];
+export type ListConfig = {
+  items: ListItemConfig[];
   nextArticlesConfigPath?: string;
 };
 
-export type ArticlesArticleConfig = {
+export type ListItemConfig = {
   title: I18nContent<string>;
   date: string;
   thumbnailImageUrl?: string;
   excerpt: I18nContent<string>;
-  articleConfigPath: string;
+  itemPageName: string;
+  itemConfigPath: string;
 };

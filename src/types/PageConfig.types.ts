@@ -1,8 +1,8 @@
 import type { I18nContent } from './I18n.types';
 
 export type PageConfig =
+  ListPageConfig |
   ArticlePageConfig |
-  ArticlesPageConfig |
   ComicsPageConfig |
   DestinationsPageConfig;
 
@@ -15,15 +15,15 @@ export type ArticlePageConfig = {
   articleConfigPath?: string;
 };
 
-export type ArticlesPageConfig = {
-  type: 'ArticlesPage';
-  articlesPerPage: number;
+export type ListPageConfig = {
+  type: 'ListPage';
   i18n: {
     pageTitle: I18nContent<string>;
     readMoreLabel: I18nContent<string>;
     loadMoreLabel: I18nContent<string>;
   };
-  articlesConfigPath: string;
+  itemsPerPage: number;
+  listConfigPath: string;
 };
 
 export type DestinationsPageConfig = {
