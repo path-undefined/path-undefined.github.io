@@ -64,7 +64,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens.scss';
+@import '@/styles/Tokens.scss';
 
 .list-block {
   padding-left: spacing(5);

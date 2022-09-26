@@ -23,7 +23,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
 
 .site-view {
   margin: 0 auto;

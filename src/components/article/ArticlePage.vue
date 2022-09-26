@@ -18,11 +18,20 @@
         {{ i18n(articleConfig.location.name) }}
         <a
           v-if="articleConfig.location.coord"
-          :href="`https://maps.google.com?q=${articleConfig.location.coord.lat},${articleConfig.location.coord.long}`"
+          :href="`https://www.openstreetmap.org/?mlat=${articleConfig.location.coord.lat}&mlon=${articleConfig.location.coord.long}`"
         >
           {{ i18n(pageConfig.i18n.mapLinkLabel) }}
         </a>
       </span>
+    </div>
+
+    <div class="article-page__back-link-container">
+      <router-link
+        class="article-page__back-link"
+        :to="{ path: `/${currentLanguageCode}/articles` }"
+      >
+        {{ i18n(pageConfig.i18n.backToListLabel) }}
+      </router-link>
     </div>
 
     <div class="article-page__blocks">
@@ -32,6 +41,15 @@
         :is="block.type"
         :blockConfig="block"
       ></component>
+    </div>
+
+    <div class="article-page__back-link-container">
+      <router-link
+        class="article-page__back-link"
+        :to="{ path: `/${currentLanguageCode}/articles` }"
+      >
+        {{ i18n(pageConfig.i18n.backToListLabel) }}
+      </router-link>
     </div>
   </div>
 </template>
@@ -86,6 +104,7 @@ export default defineComponent({
 
     return {
       i18n,
+      currentLanguageCode: globalState.currentLanguageCode,
       articleConfig,
     };
   },
@@ -93,7 +112,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
+@import '@/components/common/EmphasizedText.scss';
 
 .article-page {
   &__metadata {
@@ -104,6 +124,32 @@ export default defineComponent({
 
   &__blocks {
     margin-top: spacing(8);
+  }
+
+  &__back-link-container {
+    display: flex;
+    justify-content: center;
+    margin-top: spacing(8);
+  }
+
+  &__back-link {
+    @include typography-heading;
+    @include typography-size-s;
+
+    @include emphasized-text--default;
+
+    padding: 0;
+
+    text-decoration: none;
+
+    transition: $transition-time;
+
+    &:hover,
+    &:active {
+      @include emphasized-text--strong;
+
+      padding: 0 spacing(2);
+    }
   }
 }
 </style>

@@ -43,7 +43,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
+@import '@/components/common/EmphasizedText.scss';
 
 .site-footer {
   display: flex;
@@ -92,14 +93,14 @@ export default defineComponent({
 
     transition: $transition-time;
 
-    @include emphasized-neutral;
+    @include emphasized-text--neutral;
 
     &:hover {
-      @include emphasized-default;
+      @include emphasized-text--default;
     }
 
     &:active {
-      @include emphasized-default;
+      @include emphasized-text--default;
       margin: spacing(1) spacing(-2);
       padding: 0 spacing(2);
     }

@@ -47,7 +47,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
 
 .destinations-page {
   &__message {

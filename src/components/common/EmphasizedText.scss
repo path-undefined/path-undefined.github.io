@@ -1,0 +1,17 @@
+@mixin emphasized-text--neutral {
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-bottom: spacing(0.5) solid transparent;
+}
+
+@mixin emphasized-text--default {
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-bottom: spacing(0.5) solid $color-accent;
+}
+
+@mixin emphasized-text--strong {
+  color: $color-secondary;
+  background-color: $color-primary;
+  border-bottom: spacing(0.5) solid $color-accent;
+}

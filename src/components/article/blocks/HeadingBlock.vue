@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
 
 h2.heading-block,
 h3.heading-block,

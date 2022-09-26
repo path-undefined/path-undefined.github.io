@@ -112,7 +112,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
+@import '@/components/common/EmphasizedText.scss';
 
 .site-header {
   display: flex;
@@ -196,7 +197,8 @@ export default defineComponent({
     &-link {
       @include typography-label;
       @include typography-size-s;
-      @include emphasized-neutral;
+
+      @include emphasized-text--neutral;
 
       display: inline-block;
       text-decoration: none;
@@ -206,11 +208,11 @@ export default defineComponent({
       transition: $transition-time;
 
       &:hover {
-        @include emphasized-default;
+        @include emphasized-text--default;
       }
 
       &:active {
-        @include emphasized-default;
+        @include emphasized-text--default;
         margin-left: spacing(-2);
         margin-right: spacing(-2);
         padding-left: spacing(2);
@@ -219,7 +221,7 @@ export default defineComponent({
 
       &--current,
       &--current:hover {
-        @include emphasized-strong;
+        @include emphasized-text--strong;
         margin-left: spacing(-2);
         margin-right: spacing(-2);
         padding-left: spacing(2);

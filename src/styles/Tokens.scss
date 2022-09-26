@@ -97,22 +97,3 @@ $media-breakpoint-main: 400px;
 
 /// Animation ///
 $transition-time: 0.2s;
-
-/// Emphasize ///
-@mixin emphasized-neutral {
-  color: $color-primary;
-  background-color: $color-secondary;
-  border-bottom: spacing(0.5) solid transparent;
-}
-
-@mixin emphasized-default {
-  color: $color-primary;
-  background-color: $color-secondary;
-  border-bottom: spacing(0.5) solid $color-accent;
-}
-
-@mixin emphasized-strong {
-  color: $color-secondary;
-  background-color: $color-primary;
-  border-bottom: spacing(0.5) solid $color-accent;
-}

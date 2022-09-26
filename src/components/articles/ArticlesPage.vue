@@ -137,7 +137,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens.scss';
+@import '@/styles/Tokens.scss';
+@import '@/components/common/EmphasizedText.scss';
 
 .articles-page {
   &__list {
@@ -193,7 +194,8 @@ export default defineComponent({
     &-read-more {
       @include typography-heading;
       @include typography-size-s;
-      @include emphasized-default;
+
+      @include emphasized-text--default;
 
       margin-top: spacing(2);
       padding: 0;
@@ -203,7 +205,8 @@ export default defineComponent({
 
     &:hover &-read-more,
     &:active &-read-more {
-      @include emphasized-strong;
+      @include emphasized-text--strong;
+
       padding: 0 spacing(2);
     }
   }
@@ -211,7 +214,9 @@ export default defineComponent({
   &__load-more {
     @include typography-heading;
     @include typography-size-m;
-    @include emphasized-strong;
+
+    @include emphasized-text--strong;
+
     margin-top: spacing(8);
     padding: 0 spacing(1);
     cursor: pointer;

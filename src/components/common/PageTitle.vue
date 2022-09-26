@@ -5,12 +5,15 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
+@import '@/components/common/EmphasizedText.scss';
 
 .page-title {
   @include typography-heading;
   @include typography-size-xxl;
-  @include emphasized-strong;
+
+  @include emphasized-text--strong;
+
   border-bottom-width: spacing(1);
   text-align: center;
 }

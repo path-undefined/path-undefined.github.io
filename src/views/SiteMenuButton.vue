@@ -39,7 +39,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens';
+@import '@/styles/Tokens.scss';
 
 .site-menu-button {
   display: flex;

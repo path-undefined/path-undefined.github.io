@@ -10,6 +10,7 @@ export type ArticlePageConfig = {
   type: 'ArticlePage';
   i18n: {
     mapLinkLabel: I18nContent<string>;
+    backToListLabel: I18nContent<string>;
   };
   articleConfigPath?: string;
 };
