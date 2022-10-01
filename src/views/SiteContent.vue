@@ -41,7 +41,6 @@ export default defineComponent({
 
     watch(currentWebsitePageConfig, async (config) => {
       currentPageConfig.value = config ? await fetchConfigJson<PageConfig>(config.pageConfigPath) : undefined;
-      window.scrollTo(0, 0);
     });
 
     return {

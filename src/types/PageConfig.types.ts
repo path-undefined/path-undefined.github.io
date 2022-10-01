@@ -1,4 +1,5 @@
 import type { I18nContent } from './I18n.types';
+import type { InternalUrl } from './InternalUrl.types';
 
 export type PageConfig =
   ListPageConfig |
@@ -21,8 +22,9 @@ export type ArticlePageConfig = {
   type: 'ArticlePage';
   i18n: {
     mapLinkLabel: I18nContent<string>;
-    backToListLabel: I18nContent<string>;
+    backLinkLabel?: I18nContent<string>;
   };
+  backLinkUrl?: InternalUrl;
   articleConfigPath?: string;
 };
 

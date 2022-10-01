@@ -7,12 +7,18 @@
       {{ i18n(articleConfig.title) }}
     </PageTitle>
 
-    <div class="article-page__back-link-container">
+    <div
+      v-if="pageConfig.backLinkUrl && pageConfig.i18n.backLinkLabel"
+      class="article-page__back-link-container"
+    >
       <router-link
         class="article-page__back-link"
-        :to="{ path: `/${currentLanguageCode}/articles` }"
+        :to="{
+          path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
+          query: pageConfig.backLinkUrl.queries,
+        }"
       >
-        {{ i18n(pageConfig.i18n.backToListLabel) }}
+        {{ i18n(pageConfig.i18n.backLinkLabel) }}
       </router-link>
     </div>
 
@@ -43,12 +49,18 @@
       ></component>
     </div>
 
-    <div class="article-page__back-link-container">
+    <div
+      v-if="pageConfig.backLinkUrl && pageConfig.i18n.backLinkLabel"
+      class="article-page__back-link-container"
+    >
       <router-link
         class="article-page__back-link"
-        :to="{ path: `/${currentLanguageCode}/articles` }"
+        :to="{
+          path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
+          query: pageConfig.backLinkUrl.queries,
+        }"
       >
-        {{ i18n(pageConfig.i18n.backToListLabel) }}
+        {{ i18n(pageConfig.i18n.backLinkLabel) }}
       </router-link>
     </div>
   </div>

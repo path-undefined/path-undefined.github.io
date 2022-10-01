@@ -1,4 +1,5 @@
 import type { I18nContent } from './I18n.types';
+import type { InternalUrl } from './InternalUrl.types';
 
 export type ListConfig = {
   items: ListItemConfig[];
@@ -10,10 +11,5 @@ export type ListItemConfig = {
   date: string;
   thumbnailImageUrl?: string;
   excerpt: I18nContent<string>;
-  itemUrl: ListItemUrlConfig;
-};
-
-export type ListItemUrlConfig = {
-  pageName: string;
-  queries: { [key: string]: string };
+  itemUrl: InternalUrl;
 };
