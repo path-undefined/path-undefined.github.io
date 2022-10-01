@@ -104,7 +104,7 @@ export default defineComponent({
 
   &--thumbnails {
     cursor: zoom-in;
-    margin: spacing(5) 0;
+    margin: spacing(4) 0;
   }
 
   &--thumbnails &__description {

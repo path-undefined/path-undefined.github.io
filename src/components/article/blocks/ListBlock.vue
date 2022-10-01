@@ -66,7 +66,17 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
 
+ul.list-block {
+  list-style: disc;
+}
+
+ol.list-block {
+  list-style: decimal;
+}
+
 .list-block {
+  margin: spacing(4) 0;
   padding-left: spacing(5);
 }
+
 </style>

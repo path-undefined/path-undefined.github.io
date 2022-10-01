@@ -41,10 +41,6 @@ export type ArticleParagraphBlockConfig = {
 export type ArticleImageBlockConfig = {
   type: 'ImageBlock';
   url: string;
-  size: {
-    width: number;
-    height: number;
-  };
   description: I18nContent<string>;
 };
 
