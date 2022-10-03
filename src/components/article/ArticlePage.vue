@@ -33,7 +33,7 @@
         {{ i18n(articleConfig.location.name) }}
         <a
           v-if="articleConfig.location.coord"
-          :href="`https://www.openstreetmap.org/?mlat=${articleConfig.location.coord.lat}&mlon=${articleConfig.location.coord.long}#map=18/${articleConfig.location.coord.lat}/${articleConfig.location.coord.long}`"
+          :href="`https://www.openstreetmap.org/?mlat=${articleConfig.location.coord.lat}&mlon=${articleConfig.location.coord.long}#map=16/${articleConfig.location.coord.lat}/${articleConfig.location.coord.long}`"
           target="blank"
         >
           {{ i18n(pageConfig.i18n.mapLinkLabel) }}
