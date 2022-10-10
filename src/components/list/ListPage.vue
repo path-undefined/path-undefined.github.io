@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, shallowRef } from 'vue';
+import { defineComponent, onBeforeMount, ref, shallowRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useI18n } from '@/services/I18n';
@@ -94,7 +94,7 @@ export default defineComponent({
     // eslint-disable-next-line vue/no-setup-props-destructure
     let nextArticleConfigPath: string | undefined = props.pageConfig.listConfigPath;
 
-    onMounted(() => {
+    onBeforeMount(() => {
       items.value = [];
       hasMoreItems.value = true;
       cachedArticles = [];

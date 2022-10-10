@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowRef, onMounted } from 'vue';
+import { defineComponent, shallowRef, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { fetchConfigJson } from '@/services/Http';
@@ -109,7 +109,7 @@ export default defineComponent({
 
     const articleConfig = shallowRef<ArticleConfig>();
 
-    onMounted(async () => {
+    onBeforeMount(async () => {
       const articleConfigPath =
         props.pageConfig.articleConfigPath || route.query.articleConfigPath as string;
       articleConfig.value = await fetchConfigJson(articleConfigPath);
@@ -126,7 +126,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
-@import '@/components/common/EmphasizedText.scss';
+@import '@/components/common/TextButton.scss';
 
 .article-page {
   &__metadata {
@@ -147,23 +147,7 @@ export default defineComponent({
   }
 
   &__back-link {
-    @include typography-heading;
-    @include typography-size-s;
-
-    @include emphasized-text--default;
-
-    padding: 0;
-
-    text-decoration: none;
-
-    transition: $transition-time;
-
-    &:hover,
-    &:active {
-      @include emphasized-text--strong;
-
-      padding: 0 spacing(2);
-    }
+    @include text-button;
   }
 }
 </style>

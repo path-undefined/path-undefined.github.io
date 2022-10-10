@@ -1,0 +1,22 @@
+@import "@/styles/Tokens.scss";
+@import "@/components/common/EmphasizedText.scss";
+
+@mixin text-button {
+  @include typography-heading;
+  @include typography-size-s;
+
+  @include emphasized-text--default;
+
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: $transition-time;
+
+  &:hover,
+  &:active {
+    @include emphasized-text--strong;
+
+    margin: 0 spacing(-2);
+    padding: 0 spacing(2);
+  }
+}

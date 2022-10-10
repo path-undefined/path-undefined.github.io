@@ -39,9 +39,10 @@ export type DestinationsPageConfig = {
 export type ComicReaderPageConfig = {
   type: 'ComicReaderPage';
   i18n: {
-    backToListLabel: I18nContent<string>;
     nextPageLabel: I18nContent<string>;
     prevPageLabel: I18nContent<string>;
-    jumpToLabel: I18nContent<string>;
+    currentPageLabel: I18nContent<string>;
+    backLinkLabel: I18nContent<string>;
   };
+  backLinkUrl: InternalUrl;
 };
