@@ -3,58 +3,60 @@
     class="comic-reader-page"
     v-if="comicConfig"
   >
-    <PageTitle class="article-page__title">
-      {{ i18n(comicConfig.title) }}
-    </PageTitle>
+    <div class="comic-reader-page__container">
+      <h1 class="comic-reader-page__title">
+        {{ i18n(comicConfig.title) }}
+      </h1>
 
-    <figure
-      v-if="contentBatchConfig"
-      class="comic-reader-page__content"
-    >
-      <img
-        class="comic-reader-page__image"
-        :src="baseUrl + contentBatchConfig.pages[pageIndex].imageUrl"
+      <figure
+        v-if="contentBatchConfig"
+        class="comic-reader-page__content"
       >
+        <img
+          class="comic-reader-page__image"
+          :src="baseUrl + contentBatchConfig.pages[pageIndex].imageUrl"
+        >
 
-      <figcaption
-        class="comic-reader-page__text"
-      >
-        {{ parseMarkdown(i18n(contentBatchConfig.pages[pageIndex].text)) }}
-      </figcaption>
-    </figure>
+        <figcaption
+          class="comic-reader-page__text"
+        >
+          {{ parseMarkdown(i18n(contentBatchConfig.pages[pageIndex].text)) }}
+        </figcaption>
+      </figure>
 
-    <div class="comic-reader-page__pagination">
-      <button
-        class="comic-reader-page__jump-button"
-        @click="jumpToPrevPage"
-      >
-        {{ i18n(pageConfig.i18n.prevPageLabel) }}
-      </button>
+      <div class="comic-reader-page__pagination">
+        <button
+          class="comic-reader-page__jump-button"
+          @click="jumpToPrevPage"
+        >
+          {{ i18n(pageConfig.i18n.prevPageLabel) }}
+        </button>
 
-      <div class="comic-reader-page__current-page">
-        {{ i18n(pageConfig.i18n.currentPageLabel) }}&nbsp;{{ pageNumber }}/{{ totalPageNumber }}
+        <div class="comic-reader-page__current-page">
+          {{ i18n(pageConfig.i18n.currentPageLabel) }}&nbsp;{{ pageNumber }}/{{ totalPageNumber }}
+        </div>
+
+        <button
+          class="comic-reader-page__jump-button"
+          @click="jumpToNextPage"
+        >
+          {{ i18n(pageConfig.i18n.nextPageLabel) }}
+        </button>
       </div>
 
-      <button
-        class="comic-reader-page__jump-button"
-        @click="jumpToNextPage"
+      <div
+        class="comic-reader-page__back-link-container"
       >
-        {{ i18n(pageConfig.i18n.nextPageLabel) }}
-      </button>
-    </div>
-
-    <div
-      class="comic-reader-page__back-link-container"
-    >
-      <router-link
-        class="comic-reader-page__back-link"
-        :to="{
-          path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
-          query: pageConfig.backLinkUrl.queries,
-        }"
-      >
-        {{ i18n(pageConfig.i18n.backLinkLabel) }}
-      </router-link>
+        <router-link
+          class="comic-reader-page__back-link"
+          :to="{
+            path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
+            query: pageConfig.backLinkUrl.queries,
+          }"
+        >
+          {{ i18n(pageConfig.i18n.backLinkLabel) }}
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -69,8 +71,6 @@ import { useI18n } from '@/services/I18n';
 import { useMarkdown } from '@/services/Markdown';
 import { useGlobalState } from '@/services/GlobalState';
 
-import PageTitle from '@/components/common/PageTitle.vue';
-
 import type { PropType } from 'vue';
 import type { ComicReaderPageConfig } from '@/types/PageConfig.types';
 import type { ComicConfig, ComicContentBatchConfig } from '@/types/ComicReaderPage.types';
@@ -78,10 +78,6 @@ import type { ComicConfig, ComicContentBatchConfig } from '@/types/ComicReaderPa
 const PAGES_PER_BATCH = 10;
 
 export default defineComponent({
-  components: {
-    PageTitle,
-  },
-
   props: {
     pageConfig: {
       type: Object as PropType<ComicReaderPageConfig>,
@@ -172,16 +168,30 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
+@import '@/components/common/PageTitle.scss';
 @import '@/components/common/TextButton.scss';
 
 .comic-reader-page {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $color-secondary;
+  overflow-y: auto;
+
   &__container {
     margin: 0 auto;
     max-width: 600px;
   }
 
+  &__title {
+    @include page-title;
+    @include typography-size-xl;
+  }
+
   &__content {
-    margin-top: spacing(3);
+    margin-top: spacing(2);
   }
 
   &__image {
@@ -192,14 +202,14 @@ export default defineComponent({
   &__text {
     display: flex;
     justify-content: center;
-    margin-top: spacing(3);
+    margin-top: spacing(2);
     padding: 0 spacing(2);
   }
 
   &__pagination {
     display: flex;
     justify-content: space-around;
-    margin-top: spacing(6);
+    margin-top: spacing(4);
     width: 100%;
   }
 
@@ -210,7 +220,8 @@ export default defineComponent({
   &__back-link-container {
     display: flex;
     justify-content: center;
-    margin-top: spacing(6);
+    margin-top: spacing(4);
+    margin-bottom: spacing(6);
   }
 
   &__back-link {

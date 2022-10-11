@@ -1,8 +1,8 @@
 <template>
   <div class="list-page">
-    <PageTitle class="list-page__title">
+    <h1 class="list-page__title">
       {{ i18n(pageConfig.i18n.pageTitle) }}
-    </PageTitle>
+    </h1>
 
     <div class="list-page__list">
       <router-link
@@ -61,17 +61,11 @@ import { useGlobalState } from '@/services/GlobalState';
 import { fetchConfigJson } from '@/services/Http';
 import { useMarkdown } from '@/services/Markdown';
 
-import PageTitle from '@/components/common/PageTitle.vue';
-
 import type { PropType } from 'vue';
 import type { ListPageConfig } from '@/types/PageConfig.types';
 import type { ListConfig, ListItemConfig } from '@/types/ListConfig.types';
 
 export default defineComponent({
-  components: {
-    PageTitle,
-  },
-
   props: {
     pageConfig: {
       type: Object as PropType<ListPageConfig>,
@@ -145,9 +139,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
+@import '@/components/common/PageTitle.scss';
 @import '@/components/common/EmphasizedText.scss';
 
 .list-page {
+  &__title {
+    @include page-title;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;

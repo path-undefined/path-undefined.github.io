@@ -1,8 +1,8 @@
 <template>
   <div class="destinations-page">
-    <PageTitle class="destinations-page__title">
+    <h1 class="destinations-page__title">
       {{ i18n(pageConfig.i18n.title) }}
-    </PageTitle>
+    </h1>
 
     <p class="destinations-page__message">
       {{ i18n(pageConfig.i18n.message) }}
@@ -17,16 +17,10 @@ import { useRoute } from 'vue-router';
 import { useI18n } from '@/services/I18n';
 import { useGlobalState } from '@/services/GlobalState';
 
-import PageTitle from '@/components/common/PageTitle.vue';
-
 import type { PropType } from 'vue';
 import type { DestinationsPageConfig } from '@/types/PageConfig.types';
 
 export default defineComponent({
-  components: {
-    PageTitle,
-  },
-
   props: {
     pageConfig: {
       type: Object as PropType<DestinationsPageConfig>,
@@ -48,8 +42,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
+@import '@/components/common/PageTitle.scss';
 
 .destinations-page {
+  &__title {
+    @include page-title;
+  }
+
   &__message {
     @include typography-size-l;
     margin-top: spacing(8);

@@ -3,9 +3,9 @@
     class="article-page"
     v-if="articleConfig"
   >
-    <PageTitle class="article-page__title">
+    <h1 class="article-page__title">
       {{ i18n(articleConfig.title) }}
-    </PageTitle>
+    </h1>
 
     <div
       v-if="pageConfig.backLinkUrl && pageConfig.i18n.backLinkLabel"
@@ -75,7 +75,6 @@ import { fetchConfigJson } from '@/services/Http';
 import { useI18n } from '@/services/I18n';
 import { useGlobalState } from '@/services/GlobalState';
 
-import PageTitle from '@/components/common/PageTitle.vue';
 import HeadingBlock from './blocks/HeadingBlock.vue';
 import ParagraphBlock from './blocks/ParagraphBlock.vue';
 import ImageBlock from './blocks/ImageBlock.vue';
@@ -87,8 +86,6 @@ import type { ArticleConfig } from '@/types/ArticleConfig.types';
 
 export default defineComponent({
   components: {
-    PageTitle,
-
     HeadingBlock,
     ParagraphBlock,
     ImageBlock,
@@ -126,9 +123,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/styles/Tokens.scss';
+@import '@/components/common/PageTitle.scss';
 @import '@/components/common/TextButton.scss';
 
 .article-page {
+  &__title {
+    @include page-title;
+  }
+
   &__metadata {
     @include typography-size-xs;
     margin-top: spacing(6);
