@@ -75,7 +75,8 @@ import type { PropType } from 'vue';
 import type { ComicReaderPageConfig } from '@/types/PageConfig.types';
 import type { ComicConfig, ComicContentBatchConfig } from '@/types/ComicReaderPage.types';
 
-const PAGES_PER_BATCH = 10;
+const PADDING_LENGTH = 5;
+const PAGES_PER_BATCH = 50;
 
 export default defineComponent({
   props: {
@@ -118,7 +119,7 @@ export default defineComponent({
       const newFileNumber = Math.floor((newPageNum - 1) / PAGES_PER_BATCH);
 
       if (currentFileNumber !== newFileNumber) {
-        const newFilePath = `${comicConfigValue.batchPathPrefix}/${padLeft(newFileNumber.toString(), 3, '0')}.json`;
+        const newFilePath = `${comicConfigValue.batchPathPrefix}/${padLeft(newFileNumber.toString(), PADDING_LENGTH, '0')}.json`;
         contentBatchConfig.value = await fetchConfigJson(newFilePath);
         currentFileNumber = newFileNumber;
       }
