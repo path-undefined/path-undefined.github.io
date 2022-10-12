@@ -210,7 +210,7 @@ export default defineComponent({
   &__pagination {
     display: flex;
     justify-content: space-around;
-    margin-top: spacing(6);
+    margin-top: spacing(9);
     width: 100%;
   }
 
@@ -221,7 +221,7 @@ export default defineComponent({
   &__back-link-container {
     display: flex;
     justify-content: center;
-    margin-top: spacing(4);
+    margin-top: spacing(3);
     margin-bottom: spacing(6);
   }
 
