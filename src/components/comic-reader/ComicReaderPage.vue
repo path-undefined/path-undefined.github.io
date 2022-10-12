@@ -210,7 +210,7 @@ export default defineComponent({
   &__pagination {
     display: flex;
     justify-content: space-around;
-    margin-top: spacing(4);
+    margin-top: spacing(6);
     width: 100%;
   }
 
