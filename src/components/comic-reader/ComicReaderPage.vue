@@ -19,9 +19,8 @@
 
         <figcaption
           class="comic-reader-page__text"
-        >
-          {{ parseMarkdown(i18n(contentBatchConfig.pages[pageIndex].text)) }}
-        </figcaption>
+          v-html="parseMarkdown(i18n(contentBatchConfig.pages[pageIndex].text))"
+        ></figcaption>
       </figure>
 
       <div class="comic-reader-page__pagination">
