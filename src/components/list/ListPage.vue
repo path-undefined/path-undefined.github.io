@@ -24,9 +24,9 @@
 
         <div class="list-page__item-thumbnail-container">
           <img
-            class="list-page__item-thumbnail-image"
             v-if="item.thumbnailImageUrl"
-            :src="baseUrl + item.thumbnailImageUrl"
+            class="list-page__item-thumbnail-image"
+            :src="getThumbnailImageUrl(item.thumbnailImageUrl)"
             :alt="`Thumbnail of ${item.title}`"
           />
         </div>
@@ -90,8 +90,6 @@ export default defineComponent({
     const i18n = useI18n(globalState);
     const parseMarkdown = useMarkdown();
 
-    const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
-
     const listConfig = shallowRef<ListConfig>();
     const currentPage = ref(1);
     const items = computed(
@@ -106,6 +104,11 @@ export default defineComponent({
           ? getTotalFileNumber(props.pageConfig.filePagination)
           : 0,
     );
+
+    const getThumbnailImageUrl = (url: string) =>
+      url.startsWith('https://')
+        ? url
+        : import.meta.env.VITE_BLOG_CONTENT_BASE_URL + url;
 
     const jumpToPage = async (page: number) => {
       const filePath = getFileNameByFileIndex(props.pageConfig.filePagination, page - 1);
@@ -123,9 +126,8 @@ export default defineComponent({
 
       currentLanguageCode: globalState.currentLanguageCode,
 
-      baseUrl,
-
       items,
+      getThumbnailImageUrl,
 
       currentPage,
       totalPageNumber,

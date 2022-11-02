@@ -11,7 +11,7 @@
     <img
       class="image-block__image"
       ref="imageRef"
-      :src="baseUrl + blockConfig.url"
+      :src="imageUrl"
       :alt="i18n(blockConfig.description)"
     />
     <figcaption class="image-block__description">
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, onUnmounted, ref } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useGlobalState } from '@/services/GlobalState';
@@ -38,17 +38,20 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
     const route = useRoute();
     const globalState = useGlobalState(route);
     const i18n = useI18n(globalState);
 
     const containerRef = ref<HTMLDivElement>();
     const imageRef = ref<HTMLImageElement>();
-
-    const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
-
     const isFullscreen = ref(false);
+
+    const imageUrl = computed(() =>
+      props.blockConfig.url.startsWith('https://')
+        ? props.blockConfig.url
+        : import.meta.env.VITE_BLOG_CONTENT_BASE_URL + props.blockConfig.url,
+    );
 
     const setImageMaxDimension = () => {
       if (isFullscreen.value) {
@@ -77,7 +80,7 @@ export default defineComponent({
     });
 
     return {
-      baseUrl,
+      imageUrl,
       isFullscreen,
       toggleFullscreen,
       i18n,
