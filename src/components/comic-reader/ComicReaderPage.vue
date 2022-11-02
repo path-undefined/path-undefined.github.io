@@ -133,7 +133,7 @@ export default defineComponent({
       const comicConfigPath = route.query.comicConfigPath as string;
       comicConfig.value = await fetchConfigJson(comicConfigPath);
 
-      const startPage = readFromLocalStorage<number>('ComicReaderPage:currentPage') || Number(route.query.page) || 1;
+      const startPage = Number(route.query.page) || readFromLocalStorage<number>('ComicReaderPage:currentPage') || 1;
       jumpToPage(startPage);
     });
 
