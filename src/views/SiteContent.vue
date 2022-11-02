@@ -39,6 +39,10 @@ export default defineComponent({
     const currentWebsitePageConfig = computed(() =>
       globalState.websiteConfig.value?.pages.find((page) => page.name === globalState.currentPageName.value));
 
+    watch(route, () => {
+      window.scrollTo(0, 0);
+    });
+
     watch(currentWebsitePageConfig, async (config) => {
       currentPageConfig.value = config ? await fetchConfigJson<PageConfig>(config.pageConfigPath) : undefined;
     });

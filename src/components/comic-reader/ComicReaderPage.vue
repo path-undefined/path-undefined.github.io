@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onBeforeMount, shallowRef } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { fetchConfigJson } from '@/services/Http';
 import { readFromLocalStorage, writeToLocalStorage } from '@/services/LocalStorage';
@@ -84,6 +84,7 @@ export default defineComponent({
 
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const globalState = useGlobalState(route);
     const i18n = useI18n(globalState);
     const parseMarkdown = useMarkdown();
@@ -120,6 +121,11 @@ export default defineComponent({
         currentFilePath = newFilePath;
       }
 
+      router.push({
+        path: `/${globalState.currentLanguageCode.value}/${globalState.currentPageName.value}`,
+        query: { ...route.query, page },
+      });
+
       writeToLocalStorage('ComicReaderPage:currentPage', currentPage.value);
     };
 
@@ -127,7 +133,7 @@ export default defineComponent({
       const comicConfigPath = route.query.comicConfigPath as string;
       comicConfig.value = await fetchConfigJson(comicConfigPath);
 
-      const startPage = readFromLocalStorage<number>('ComicReaderPage:currentPage') || 1;
+      const startPage = readFromLocalStorage<number>('ComicReaderPage:currentPage') || Number(route.query.page) || 1;
       jumpToPage(startPage);
     });
 

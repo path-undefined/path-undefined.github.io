@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeMount, ref, shallowRef } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { useI18n } from '@/services/I18n';
 import { useGlobalState } from '@/services/GlobalState';
@@ -86,6 +86,7 @@ export default defineComponent({
 
   async setup(props) {
     const route = useRoute();
+    const router = useRouter();
     const globalState = useGlobalState(route);
     const i18n = useI18n(globalState);
     const parseMarkdown = useMarkdown();
@@ -114,10 +115,16 @@ export default defineComponent({
       const filePath = getFileNameByFileIndex(props.pageConfig.filePagination, page - 1);
       listConfig.value = await fetchConfigJson(filePath);
       currentPage.value = page;
+
+      router.push({
+        path: `/${globalState.currentLanguageCode.value}/${globalState.currentPageName.value}`,
+        query: { ...route.query, page },
+      });
     };
 
     onBeforeMount(() => {
-      jumpToPage(1);
+      const page = Number(route.query.page) || 1;
+      jumpToPage(page);
     });
 
     return {
