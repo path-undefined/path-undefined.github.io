@@ -11,6 +11,7 @@
       <figure
         v-if="contentBatchConfig"
         class="comic-reader-page__content"
+        :key="currentPage"
       >
         <img
           class="comic-reader-page__image"
