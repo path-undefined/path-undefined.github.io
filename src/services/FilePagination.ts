@@ -21,7 +21,7 @@ export function getFileNameByFileIndex(config: FilePaginationConfig, fileIndex: 
   const padLeft = (str: string, length: number, paddingChar: string) => {
     let result = str;
     while (result.length < length) {
-      result += paddingChar;
+      result = paddingChar + result;
     }
     return result;
   };
