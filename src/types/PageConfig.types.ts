@@ -1,3 +1,4 @@
+import type { FilePaginationConfig } from './FilePagination.types';
 import type { I18nContent } from './I18n.types';
 import type { InternalUrl } from './InternalUrl.types';
 
@@ -12,10 +13,11 @@ export type ListPageConfig = {
   i18n: {
     pageTitle: I18nContent<string>;
     readMoreLabel: I18nContent<string>;
-    loadMoreLabel: I18nContent<string>;
+    prevPageLabel: I18nContent<string>;
+    currentPageLabel: I18nContent<string>;
+    nextPageLabel: I18nContent<string>;
   };
-  itemsPerPage: number;
-  listConfigPath: string;
+  filePagination: FilePaginationConfig;
 };
 
 export type ArticlePageConfig = {

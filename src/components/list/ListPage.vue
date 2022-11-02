@@ -5,7 +5,7 @@
     </h1>
 
     <div class="list-page__list">
-      <router-link
+      <RouterLink
         class="list-page__item"
         v-for="item, index in items"
         :key="index"
@@ -39,21 +39,25 @@
         <div class="list-page__item-read-more">
           {{ i18n(pageConfig.i18n.readMoreLabel) }}
         </div>
-      </router-link>
+      </RouterLink>
 
-      <button
-        class="list-page__load-more"
-        v-if="hasMoreItems"
-        @click="loadMore"
-      >
-        {{ i18n(pageConfig.i18n.loadMoreLabel) }}
-      </button>
+      <PaginationControl
+        class="list-page__pagination"
+        :currentPage="currentPage"
+        :totalPageNumber="totalPageNumber"
+        :i18n="{
+          prevPageLabel: i18n(pageConfig.i18n.prevPageLabel),
+          currentPageLabel: i18n(pageConfig.i18n.currentPageLabel),
+          nextPageLabel: i18n(pageConfig.i18n.nextPageLabel),
+        }"
+        @update:currentPage="jumpToPage"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref, shallowRef } from 'vue';
+import { computed, defineComponent, onBeforeMount, ref, shallowRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useI18n } from '@/services/I18n';
@@ -61,11 +65,18 @@ import { useGlobalState } from '@/services/GlobalState';
 import { fetchConfigJson } from '@/services/Http';
 import { useMarkdown } from '@/services/Markdown';
 
+import PaginationControl from '@/components/common/PaginationControl.vue';
+
 import type { PropType } from 'vue';
 import type { ListPageConfig } from '@/types/PageConfig.types';
-import type { ListConfig, ListItemConfig } from '@/types/ListConfig.types';
+import type { ListConfig } from '@/types/ListConfig.types';
+import { getFileNameByFileIndex, getTotalFileNumber } from '@/services/FilePagination';
 
 export default defineComponent({
+  components: {
+    PaginationControl,
+  },
+
   props: {
     pageConfig: {
       type: Object as PropType<ListPageConfig>,
@@ -81,45 +92,30 @@ export default defineComponent({
 
     const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
 
-    const items = shallowRef<ListItemConfig[]>([]);
-    const hasMoreItems = ref<boolean>(true);
+    const listConfig = shallowRef<ListConfig>();
+    const currentPage = ref(1);
+    const items = computed(
+      () =>
+        listConfig.value
+          ? listConfig.value.items
+          : [],
+    );
+    const totalPageNumber = computed(
+      () =>
+        listConfig.value
+          ? getTotalFileNumber(props.pageConfig.filePagination)
+          : 0,
+    );
 
-    let cachedArticles: ListItemConfig[] = [];
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    let nextArticleConfigPath: string | undefined = props.pageConfig.listConfigPath;
+    const jumpToPage = async (page: number) => {
+      const filePath = getFileNameByFileIndex(props.pageConfig.filePagination, page - 1);
+      listConfig.value = await fetchConfigJson(filePath);
+      currentPage.value = page;
+    };
 
     onBeforeMount(() => {
-      items.value = [];
-      hasMoreItems.value = true;
-      cachedArticles = [];
-      nextArticleConfigPath = props.pageConfig.listConfigPath;
-
-      loadMore();
+      jumpToPage(1);
     });
-
-    const loadMore = async () => {
-      const targetArticleAmount = items.value.length + props.pageConfig.itemsPerPage;
-
-      while (items.value.length < targetArticleAmount) {
-        if (cachedArticles.length === 0) {
-          if (nextArticleConfigPath) {
-            const articlesConfig = await fetchConfigJson<ListConfig>(nextArticleConfigPath);
-            cachedArticles = cachedArticles.concat(articlesConfig.items);
-            nextArticleConfigPath = articlesConfig.nextArticlesConfigPath;
-          } else {
-            hasMoreItems.value = false;
-            break;
-          }
-        }
-
-        if (cachedArticles.length === 0 && !nextArticleConfigPath) {
-          hasMoreItems.value = false;
-          break;
-        }
-
-        items.value.push(cachedArticles.shift()!);
-      }
-    };
 
     return {
       i18n,
@@ -130,8 +126,10 @@ export default defineComponent({
       baseUrl,
 
       items,
-      hasMoreItems,
-      loadMore,
+
+      currentPage,
+      totalPageNumber,
+      jumpToPage,
     };
   },
 });
@@ -217,25 +215,8 @@ export default defineComponent({
     }
   }
 
-  &__load-more {
-    @include typography-heading;
-    @include typography-size-m;
-
-    @include emphasized-text--strong;
-
+  &__pagination {
     margin-top: spacing(8);
-    padding: 0 spacing(1);
-    cursor: pointer;
-
-    transition: $transition-time;
-
-    &:hover {
-      padding: 0 spacing(2);
-    }
-
-    &:active {
-      padding: 0 spacing(3);
-    }
   }
 }
 </style>

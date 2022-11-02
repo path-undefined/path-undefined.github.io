@@ -11,7 +11,7 @@
       v-if="pageConfig.backLinkUrl && pageConfig.i18n.backLinkLabel"
       class="article-page__back-link-container"
     >
-      <router-link
+      <RouterLink
         class="article-page__back-link"
         :to="{
           path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
@@ -19,7 +19,7 @@
         }"
       >
         {{ i18n(pageConfig.i18n.backLinkLabel) }}
-      </router-link>
+      </RouterLink>
     </div>
 
     <div class="article-page__metadata">
@@ -54,7 +54,7 @@
       v-if="pageConfig.backLinkUrl && pageConfig.i18n.backLinkLabel"
       class="article-page__back-link-container"
     >
-      <router-link
+      <RouterLink
         class="article-page__back-link"
         :to="{
           path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
@@ -62,7 +62,7 @@
         }"
       >
         {{ i18n(pageConfig.i18n.backLinkLabel) }}
-      </router-link>
+      </RouterLink>
     </div>
   </div>
 </template>

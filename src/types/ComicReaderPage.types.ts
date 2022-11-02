@@ -1,9 +1,9 @@
+import type { FilePaginationConfig } from './FilePagination.types';
 import type { I18nContent } from './I18n.types';
 
 export type ComicConfig = {
   title: I18nContent<string>;
-  batchPathPrefix: string;
-  totalPageNumber: number;
+  filePagination: FilePaginationConfig;
 };
 
 export type ComicContentBatchConfig = {

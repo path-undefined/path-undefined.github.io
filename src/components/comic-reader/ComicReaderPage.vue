@@ -23,30 +23,22 @@
         ></figcaption>
       </figure>
 
-      <div class="comic-reader-page__pagination">
-        <button
-          class="comic-reader-page__jump-button"
-          @click="jumpToPrevPage"
-        >
-          {{ i18n(pageConfig.i18n.prevPageLabel) }}
-        </button>
-
-        <div class="comic-reader-page__current-page">
-          {{ i18n(pageConfig.i18n.currentPageLabel) }}&nbsp;{{ pageNumber }}/{{ totalPageNumber }}
-        </div>
-
-        <button
-          class="comic-reader-page__jump-button"
-          @click="jumpToNextPage"
-        >
-          {{ i18n(pageConfig.i18n.nextPageLabel) }}
-        </button>
-      </div>
+      <PaginationControl
+        class="comic-reader-page__pagination"
+        :currentPage="currentPage"
+        :totalPageNumber="totalPageNumber"
+        :i18n="{
+          prevPageLabel: i18n(pageConfig.i18n.prevPageLabel),
+          currentPageLabel: i18n(pageConfig.i18n.currentPageLabel),
+          nextPageLabel: i18n(pageConfig.i18n.nextPageLabel),
+        }"
+        @update:currentPage="jumpToPage"
+      />
 
       <div
         class="comic-reader-page__back-link-container"
       >
-        <router-link
+        <RouterLink
           class="comic-reader-page__back-link"
           :to="{
             path: `/${currentLanguageCode}/${pageConfig.backLinkUrl.pageName}`,
@@ -54,7 +46,7 @@
           }"
         >
           {{ i18n(pageConfig.i18n.backLinkLabel) }}
-        </router-link>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -69,15 +61,19 @@ import { readFromLocalStorage, writeToLocalStorage } from '@/services/LocalStora
 import { useI18n } from '@/services/I18n';
 import { useMarkdown } from '@/services/Markdown';
 import { useGlobalState } from '@/services/GlobalState';
+import { getFileNameByItemIndex, getItemIndexInFile } from '@/services/FilePagination';
+
+import PaginationControl from '@/components/common/PaginationControl.vue';
 
 import type { PropType } from 'vue';
 import type { ComicReaderPageConfig } from '@/types/PageConfig.types';
 import type { ComicConfig, ComicContentBatchConfig } from '@/types/ComicReaderPage.types';
 
-const PADDING_LENGTH = 5;
-const PAGES_PER_BATCH = 50;
-
 export default defineComponent({
+  components: {
+    PaginationControl,
+  },
+
   props: {
     pageConfig: {
       type: Object as PropType<ComicReaderPageConfig>,
@@ -93,56 +89,44 @@ export default defineComponent({
     const baseUrl = import.meta.env.VITE_BLOG_CONTENT_BASE_URL;
 
     const comicConfig = shallowRef<ComicConfig>();
+    const currentPage = ref();
 
-    const pageNumber = ref();
-    const totalPageNumber = computed(() => comicConfig.value?.totalPageNumber || 0);
-    const pageIndex = computed(() => (pageNumber.value - 1) % PAGES_PER_BATCH);
+    const totalPageNumber = computed(
+      () => comicConfig.value
+        ? comicConfig.value.filePagination.totalItemNumber
+        : 0,
+    );
+    const pageIndex = computed(
+      () =>
+        comicConfig.value && currentPage.value
+          ? getItemIndexInFile(comicConfig.value.filePagination, currentPage.value - 1)
+          : 0,
+    );
 
     const contentBatchConfig = ref<ComicContentBatchConfig>();
-    let currentFileNumber: number;
 
-    const jumpToPage = async (pageNum: number) => {
-      const comicConfigValue = comicConfig.value;
-      if (!comicConfigValue) {
+    let currentFilePath: string;
+    const jumpToPage = async (page: number) => {
+      if (!comicConfig.value) {
         return;
       }
 
-      let newPageNum = pageNum;
-      if (newPageNum < 1) {
-        newPageNum = 1;
-      }
-      if (newPageNum > comicConfigValue.totalPageNumber) {
-        newPageNum = comicConfigValue.totalPageNumber;
-      }
+      currentPage.value = page;
 
-      const newFileNumber = Math.floor((newPageNum - 1) / PAGES_PER_BATCH);
-
-      if (currentFileNumber !== newFileNumber) {
-        const newFilePath = `${comicConfigValue.batchPathPrefix}/${padLeft(newFileNumber.toString(), PADDING_LENGTH, '0')}.json`;
+      const newFilePath = getFileNameByItemIndex(comicConfig.value.filePagination, currentPage.value - 1);
+      if (currentFilePath !== newFilePath) {
         contentBatchConfig.value = await fetchConfigJson(newFilePath);
-        currentFileNumber = newFileNumber;
+        currentFilePath = newFilePath;
       }
 
-      pageNumber.value = newPageNum;
-      writeToLocalStorage('ComicReaderPage:currentPageNumber', newPageNum);
-    };
-
-    const jumpToPrevPage = () => { jumpToPage(pageNumber.value - 1) };
-    const jumpToNextPage = () => { jumpToPage(pageNumber.value + 1) };
-
-    const padLeft = (str: string, length: number, paddingChar: string) => {
-      let result = str;
-      while (result.length < length) {
-        result += paddingChar;
-      }
-      return result;
+      writeToLocalStorage('ComicReaderPage:currentPage', currentPage.value);
     };
 
     onBeforeMount(async () => {
       const comicConfigPath = route.query.comicConfigPath as string;
       comicConfig.value = await fetchConfigJson(comicConfigPath);
 
-      const startPage = readFromLocalStorage<number>('ComicReaderPage:currentPageNumber') || 1;
+      const startPage = readFromLocalStorage<number>('ComicReaderPage:currentPage') || 1;
       jumpToPage(startPage);
     });
 
@@ -155,12 +139,10 @@ export default defineComponent({
       comicConfig,
       contentBatchConfig,
 
-      pageNumber,
-      totalPageNumber,
-      pageIndex,
-
-      jumpToPrevPage,
-      jumpToNextPage,
+      currentPage,
+      totalPageNumber: totalPageNumber,
+      pageIndex: pageIndex,
+      jumpToPage,
     };
   },
 });
@@ -207,14 +189,7 @@ export default defineComponent({
   }
 
   &__pagination {
-    display: flex;
-    justify-content: space-around;
-    margin-top: spacing(9);
-    width: 100%;
-  }
-
-  &__jump-button {
-    @include text-button;
+    margin-top: spacing(8);
   }
 
   &__back-link-container {
