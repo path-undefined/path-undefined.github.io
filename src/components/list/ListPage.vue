@@ -166,6 +166,7 @@ export default defineComponent({
     align-items: center;
 
     margin-top: spacing(10);
+    width: 100%;
 
     color: $color-primary;
     text-decoration: none;

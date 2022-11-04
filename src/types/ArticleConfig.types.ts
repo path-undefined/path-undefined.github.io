@@ -56,3 +56,12 @@ type ArticleListBlockBaseListConfig = {
   variant: 'ordered' | 'unordered';
   items: (I18nContent<string> | ArticleListBlockSubListConfig)[];
 };
+
+export type ArticleYoutubeBlockConfig = {
+  videoId: string;
+  aspectRatio: {
+    width: number;
+    height: number;
+  };
+  description: I18nContent<string>;
+};

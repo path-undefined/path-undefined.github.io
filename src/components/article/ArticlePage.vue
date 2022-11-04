@@ -79,6 +79,7 @@ import HeadingBlock from './blocks/HeadingBlock.vue';
 import ParagraphBlock from './blocks/ParagraphBlock.vue';
 import ImageBlock from './blocks/ImageBlock.vue';
 import ListBlock from './blocks/ListBlock.vue';
+import YoutubeBlock from './blocks/YoutubeBlock.vue';
 
 import type { PropType } from 'vue';
 import type { ArticlePageConfig } from '@/types/PageConfig.types';
@@ -90,6 +91,7 @@ export default defineComponent({
     ParagraphBlock,
     ImageBlock,
     ListBlock,
+    YoutubeBlock,
   },
 
   props: {
