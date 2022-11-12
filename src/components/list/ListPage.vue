@@ -8,7 +8,7 @@
       <RouterLink
         class="list-page__item"
         v-for="item, index in items"
-        :key="index"
+        :key="`${currentPage}-${index}`"
         :to="{
           path: `/${currentLanguageCode}/${item.itemUrl.pageName}`,
           query: item.itemUrl.queries,
