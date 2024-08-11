@@ -74,8 +74,13 @@ onBeforeMount(async () => {
 
 .nav-list {
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
   padding: 0;
+}
+
+.nav-item {
+  white-space: nowrap;
 }
 
 .nav-item:not(:last-child):after {

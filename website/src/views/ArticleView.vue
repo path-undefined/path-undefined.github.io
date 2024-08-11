@@ -142,7 +142,7 @@ const reload = async () => {
 }
 
 .article-content:deep(ul) {
-  list-style: circle;
+  list-style: disc;
 }
 
 .article-content:deep(ol) {
