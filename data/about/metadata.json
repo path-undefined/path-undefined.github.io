@@ -1,0 +1,14 @@
+{
+  "key": "about",
+  "type": "article",
+
+  "path": "/about",
+
+  "title": "About",
+  "time": "2024-08-10T01:49:44+02:00",
+  "geolocation": {
+    "name": "Home"
+  },
+  "summary": "A path, which hasn't yet been taken, is undefined.",
+  "thumbnail": "/data/about/img/thumbnail.webp"
+}
