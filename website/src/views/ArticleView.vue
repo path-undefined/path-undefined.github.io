@@ -2,18 +2,26 @@
 import { ref, onBeforeMount, computed, watch } from "vue";
 import { Marked } from "marked";
 import { markedHighlight } from "marked-highlight";
+import markedKatex from "marked-katex-extension";
+import "katex/dist/katex.min.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.min.css";
 import type { Article } from "@/types/Article";
 import { formatDateTime } from "@/services/DateTime";
 
-const marked = new Marked(
+const marked = new Marked();
+marked.use(
   markedHighlight({
     langPrefix: "hljs language-",
     highlight: (code, lang) => {
       const language = hljs.getLanguage(lang) ? lang : "plaintext";
       return hljs.highlight(code, { language }).value;
     },
+  }),
+);
+marked.use(
+  markedKatex({
+    throwOnError: false,
   }),
 );
 
@@ -139,5 +147,10 @@ const reload = async () => {
 
 .article-content:deep(ol) {
   list-style: decimal;
+}
+
+.article-content:deep(code.hljs) {
+  font-size: 1rem;
+  line-height: 1.5;
 }
 </style>

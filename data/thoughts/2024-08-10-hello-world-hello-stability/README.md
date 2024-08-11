@@ -1,4 +1,4 @@
-<sub>[Image by awesomecontent on Freepik](https://www.freepik.com/free-photo/stack-pebble-stones_991779.htm#fromView=search&page=1&position=35&uuid=af93ef07-3f55-43ae-85dc-73770d99f987)</sub>
+<sup>[Thumbnail image by awesomecontent on Freepik](https://www.freepik.com/free-photo/stack-pebble-stones_991779.htm#fromView=search&page=1&position=35&uuid=af93ef07-3f55-43ae-85dc-73770d99f987)</sup>
 
 On 10. August, 2024, the Path Undefined blog is online, again... Yes, I had another version of Path Undefined. And now I'm just in the mood to start everything over, it is partially because I wanted to forget something unpleasant, but more importantly, I have noticed that I have slowly figured out what I really wanted to do.
 
