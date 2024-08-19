@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue";
+import { ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import type { Category } from "@/types/Category";
 import { formatDateTime } from "@/services/DateTime";
@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const contentConfig = ref<Category | null>(null);
 
-onBeforeMount(async () => {
+watch(() => props.contentPath, async () => {
   const contentUrl = props.contentPath;
   const response = await fetch(contentUrl);
 
@@ -19,7 +19,7 @@ onBeforeMount(async () => {
   }
 
   contentConfig.value = await response.json();
-});
+}, { immediate: true });
 </script>
 
 <template>

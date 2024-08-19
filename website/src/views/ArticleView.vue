@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { Marked } from "marked";
 import { markedHighlight } from "marked-highlight";
 import markedKatex from "marked-katex-extension";
@@ -40,15 +40,7 @@ const contentTimeString = computed<string | null>(() => {
 });
 const contentHtml = computed<string>(() => marked.parse(contentConfig.value?.content ?? "") as string);
 
-watch(() => props.contentPath, () => {
-  reload();
-});
-
-onBeforeMount(() => {
-  reload();
-});
-
-const reload = async () => {
+watch(() => props.contentPath, async () => {
   const contentUrl = props.contentPath;
   const response = await fetch(contentUrl);
 
@@ -57,7 +49,7 @@ const reload = async () => {
   }
 
   contentConfig.value = await response.json();
-};
+}, { immediate: true });
 </script>
 
 <template>
