@@ -54,31 +54,39 @@ watch(() => props.contentPath, async () => {
 
 <template>
   <template v-if="contentConfig">
-    <h1 class="article-title fs-headline-1 m-h-std">
+    <h1 class="article-title">
       {{ contentConfig.title }}
     </h1>
 
-    <div class="article-metadata fs-content-sm m-h-lg">
+    <div class="article-metadata">
       <p>
         {{ contentTimeString }}
       </p>
 
       <p v-if="contentConfig.geolocation">
-        {{ contentConfig.geolocation.name }}
+        <template v-if="contentConfig.geolocation.coord">
+          <a :href="`https://www.openstreetmap.org/#map=19/${contentConfig.geolocation.coord.lat}/${contentConfig.geolocation.coord.long}`">
+            {{ contentConfig.geolocation.name }}
+          </a>
+        </template>
+        <template v-else>
+          {{ contentConfig.geolocation.name }}
+        </template>
       </p>
     </div>
 
     <img
       v-if="contentConfig.thumbnail"
-      class="article-thumbnail m-h-lg"
+      class="article-thumbnail"
       :src="contentConfig.thumbnail"
+      alt=""
     >
 
-    <p class="article-summary fs-content-lg m-h-lg">
+    <p class="article-summary">
       {{ contentConfig.summary }}
     </p>
 
-    <hr class="article-splitter m-h-lg">
+    <hr class="article-splitter">
 
     <!-- eslint-disable vue/no-v-html -->
     <div
@@ -90,9 +98,26 @@ watch(() => props.contentPath, async () => {
 </template>
 
 <style scoped>
+.article-metadata {
+  margin: var(--margin-l) var(--margin-0);
+}
+
+.article-metadata > p {
+  margin: var(--margin-0);
+  font-size: var(--fs-content-s);
+}
+
 .article-thumbnail {
   display: block;
+  margin: var(--margin-m) auto;
   width: 100%;
+  aspect-ratio: 1/1;
+  overflow: clip;
+  object-fit: cover;
+}
+
+.article-summary {
+  font-size: var(--fs-content-l);
 }
 
 .article-content {
@@ -105,32 +130,14 @@ watch(() => props.contentPath, async () => {
   display: none;
 }
 
-.article-content:deep(h4) {
-  margin: 1em 0;
-  font-size: 2em;
-  line-height: 1;
-}
-
-.article-content:deep(h3) {
-  margin: 1em 0;
-  font-size: 2.5em;
-  line-height: 1;
-}
-
-.article-content:deep(h2) {
-  margin: 1em 0;
-  font-size: 3em;
-  line-height: 1;
-}
-
 .article-content:deep(p) {
-  margin: 1.5em 0;
+  margin: var(--margin-l) var(--margin-0);
 }
 
 .article-content:deep(ul),
 .article-content:deep(ol) {
-  margin: 1.5em 0;
-  padding-left: 3em;
+  margin: var(--margin-l) var(--margin-0);
+  padding-left: var(--padding-xl);
 }
 
 .article-content:deep(ul) {

@@ -20,35 +20,34 @@ onBeforeMount(async () => {
 <template>
   <div class="page">
     <header class="header">
-      <div class="site-title fs-headline-1">
-        Path<br>
-        Undefined
-      </div>
-      <nav class="nav-menu m-h-std">
-        <ul class="nav-list">
-          <li
-            v-for="menuEntry of menuEntries"
-            :key="menuEntry.key"
-            class="nav-item"
-          >
-            <router-link :to="{ name: menuEntry.key }">
-              {{ menuEntry.label }}
-            </router-link>
-          </li>
-        </ul>
-      </nav>
+      Path<br>
+      Undefined
     </header>
 
-    <hr class="splitter m-h-lg">
+    <nav class="navigation">
+      <ul class="nav-list">
+        <li
+          v-for="menuEntry of menuEntries"
+          :key="menuEntry.key"
+          class="nav-item"
+        >
+          <router-link :to="{ name: menuEntry.key }">
+            {{ menuEntry.label }}
+          </router-link>
+        </li>
+      </ul>
+    </nav>
 
-    <main class="content m-h-xlg">
+    <hr class="splitter">
+
+    <main class="content">
       <RouterView />
     </main>
 
-    <hr class="splitter m-h-lg">
+    <hr class="splitter">
 
     <footer class="footer">
-      <p class="copyright fs-content-sm">
+      <p class="copyright">
         Except where otherwise noted, the content in this website is licensed under
         <a
           href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
@@ -64,32 +63,51 @@ onBeforeMount(async () => {
 <style scoped>
 .page {
   margin: 0 auto;
-  padding: 1em;
+  padding: var(--padding-l) var(--padding-m);
   max-width: 750px;
 }
 
-.site-title {
-  font-family: "Fredericka the Great", serif;
+.header {
+  font-family: var(--ff-display);
+  font-weight: var(--fw-bold);
+  font-size: 16vw;
+  line-height: var(--lh-headline);
+}
+@media (min-width:500px) {
+  .header {
+    font-size: 80px;
+  }
+}
+
+.navigation {
+  margin: var(--margin-xl) var(--margin-0);
+  font-size: var(--fs-content-l);
+  font-weight: var(--fw-bold);
 }
 
 .nav-list {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  padding: 0;
+  padding: var(--padding-0);
 }
 
 .nav-item {
   white-space: nowrap;
 }
-
 .nav-item:not(:last-child):after {
   display: inline-block;
-  margin: 0 1em;
+  margin: 0 var(--margin-m);
+  font-weight: var(--fw-normal);
   content: "|";
 }
 
+.splitter {
+  height: var(--hr-height-thick);
+}
+
 .footer {
+  font-size: var(--fs-content-s);
   text-align: right;
 }
 </style>

@@ -31,25 +31,20 @@ const typeOneCharacter = () => {
 
 <style scoped>
 .typewritter {
-  min-height: 5.33em;
+  min-height: 4em;
   text-align: center;
-  font-size: 2.5em;
+  font-size: 9vw;
   font-weight: 600;
   line-height: 1.33;
 }
-
-@media (min-width:500px) {
+@media (min-width:800px) {
   .typewritter {
-    min-height: 4em;
-    text-align: center;
-    font-size: 4.5em;
-    font-weight: 600;
-    line-height: 1.33;
+    font-size: 72px;
   }
 }
 
 .typewritter::after {
-  color: orange;
+  color: tomato;
   content: "|";
   animation: caret 1s steps(1) infinite;
 }

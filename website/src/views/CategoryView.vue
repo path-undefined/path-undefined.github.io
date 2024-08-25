@@ -24,40 +24,66 @@ watch(() => props.contentPath, async () => {
 
 <template>
   <template v-if="contentConfig">
-    <h1 class="fs-headline-1 m-h-std">
+    <h1 class="category-title">
       {{ contentConfig.title }}
     </h1>
 
-    <p class="fs-content-lg m-h-lg">
+    <p class="category-summary">
       {{ contentConfig.introduction }}
     </p>
 
-    <hr class="m-h-lg">
+    <hr class="category-splitter">
 
-    <ul class="m-h-lg p-v-std">
+    <ul class="category-article-list">
       <li
         v-for="article of contentConfig.articles"
         :key="article.key"
-        class="m-h-lg"
+        class="category-article-item"
       >
-        <div class="fs-content-lg m-h-sm">
-          <router-link
-            class="fmod-bold"
-            :to="`${contentConfig.path}/${article.key}`"
-          >
+        <div class="category-article-title">
+          <router-link :to="`${contentConfig.path}/${article.key}`">
             {{ article.title }}
           </router-link>
         </div>
-        <div class="fs-content-sm m-h-sm">
+        <p class="category-article-metadata">
           {{ formatDateTime(article.time) }}
           <template v-if="article.geolocation">
             :: {{ article.geolocation.name }}
           </template>
-        </div>
-        <p class="m-h-sm">
+        </p>
+        <p class="category-article-summary">
           {{ article.summary }}
         </p>
       </li>
     </ul>
   </template>
 </template>
+
+<style scoped>
+.category-summary {
+  font-size: var(--fs-content-l);
+}
+
+.category-article-list {
+  padding: var(--padding-0);
+  list-style: none;
+}
+
+.category-article-item {
+  margin: var(--margin-xl) var(--margin-0);
+}
+
+.category-article-title {
+  font-size: var(--fs-content-l);
+  font-weight: var(--fw-bold);
+}
+
+.category-article-metadata {
+  margin: var(--margin-s) var(--margin-0);
+  font-size: var(--fs-content-s);
+}
+
+.category-article-summary {
+  margin: var(--margin-m) var(--margin-0);
+}
+</style>
