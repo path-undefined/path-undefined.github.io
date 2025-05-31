@@ -1,0 +1,129 @@
+body {
+  font-family: "Noto Serif", serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+h1 {
+  margin: 1em auto;
+  width: 80%;
+  text-align: center;
+  font-size: 2.75rem;
+}
+h2 {
+  margin: 1em 0 0.5em 0;
+  font-size: 2rem;
+}
+h3 {
+  margin: 1em 0 0.5em 0;
+  font-size: 1.5rem;
+}
+h4 {
+  margin: 1em 0 0.5em 0;
+  font-size: 1.25rem;
+}
+h5, h6 {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.site {
+  margin: 0 auto;
+  max-width: 50rem;
+}
+
+.header,
+.footer {
+  text-align: center;
+}
+
+.site-title {
+  margin: 0.5rem 0;
+  font-family: "EB Garamond", serif;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.one-sentence {
+  margin: 0.5rem 0;
+}
+
+.nav__list { 
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.nav__item {
+  display: inline-block;
+}
+.nav__item:not(:last-child)::after {
+  content: "|";
+  padding: 0 1rem;
+}
+
+.splitter {
+  margin: 4rem 0;
+  border: 0;
+  height: 1px;
+  background: #333;
+}
+
+.article-highlight,
+.article {
+  margin-bottom: 3rem; 
+}
+
+.article__title {
+  text-align: center;
+}
+
+.article__date {
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 800px) {
+  .article-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
+
+  .article-list .article {
+    width: calc(50% - 1.5rem);
+  }
+}
+
+.archive__item {
+  display: flex;
+  align-items: start;
+  margin: 0.55rem 0;
+  font-size: 1.1rem;
+}
+
+.archive__item-date {
+  width: 7.25rem;
+}
+
+.archive__item-link {
+  flex: 1;
+}
