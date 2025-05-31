@@ -97,9 +97,8 @@ a:hover {
 
 /**************************************/
 
-.article-highlight,
-.article {
-  margin-bottom: 48px; 
+.article-highlight {
+  margin-bottom: 24px; 
 }
 
 .article__title {
@@ -116,6 +115,8 @@ a:hover {
 .article-list {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 
 hr {
@@ -129,8 +130,6 @@ hr {
 @media (min-width: 800px) {
   .article-list {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 48px;
   }
 
   .article-list .article {
