@@ -127,3 +127,7 @@ a:hover {
 .archive__item-link {
   flex: 1;
 }
+
+.footer {
+  margin-bottom: 4rem;
+}
