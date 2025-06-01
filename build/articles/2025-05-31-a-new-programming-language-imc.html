@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A New Programming Language — IM/C | Path Undefined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/github.min.css">
+</head>
+
+<body>
+  <div class="site">
+    <header class="header">
+      <div class="site-title">
+        Path Undefined
+      </div>
+      <div class="one-sentence">
+        — An undefined path of life.
+      </div>
+
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a class="nav__link" href="/">
+              Newest
+            </a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="/archive.html">
+              Archive
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <hr class="splitter" />
+
+    <main class="main">
+      <article>
+  <h1>A New Programming Language — IM/C</h1>
+<p>I have worked on a toy programming language for a while now. I call it a slightly IMproved C language, aka. IM/C.</p>
+<p>I personally like C language a lot. It has a minimalistic set of syntaxes and features, but all of them are goal oriented and useful. Its instructions and memory model is very close to the hardware, instead of building a lot of abstract layers opon it. Regarding the manual memory management, with some practises, with good habits developed and best practises applied, one can achieve a hugh flexibility with it. All of these features fit to my philosophy about IT very well.</p>
+<p>But if I have the freedom to choose which language to use if I have a new project, I wouldn&#39;t pick up C. It is not because of the language itself, but rather the eco-system. First of all, C doesn&#39;t really have a strong and organized standard library (thinking about <code>std*.h</code>), some other libraries are platform dependent (thinking about POSIX), which makes it unnecessarily difficult even to finish an easy task, like keeping a set of randomly accessible data (linked list or array list) or parsing JSON.</p>
+<p>The lack of the project management system and dependency management system is also a huge problem stopping the growth of the language. Although C has always been criticised for being platform dependent, the features of a standard library seldomly fall into this group. And even if some of them are indeed platform dependent, once being carefully structured, the interface could still be platform independent (taking SDL as an example). So there is actually no excuse not to provide this kind of system, so that the works of different people can be shared easily.</p>
+<p>And there are also some language features that I want to adjust. First of all. I personally don&#39;t think the macro system of C is a good idea being used as a templating system. Since it nullifies all the modern features of IDEs, e.g. to do the type checking and so on. I find the C++ templating system in this case much better.</p>
+<p>Motivated by the idea to keep the features that I like, and to improve the lacking parts in C language, I decided to create my own language which will be transpiled into C. In this case, it should be interactable with C without any overhead.</p>
+<p>The following code is demonstrating the differences between two languages:</p>
+<pre><code class="hljs language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> * argv[])</span> {
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello world\n&quot;</span>);
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; argc; i++) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  argv[%d] = %s\n&quot;</span>, i, argv[i]);
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre><p>And the IM/C counter part will be:</p>
+<pre><code class="hljs language-imc">import std::io;
+
+func main(argc: int32, argv: arr[ptr[char]]): int {
+  std::io::printf(c&quot;hello world\n&quot;);
+
+  loop with { var i: int32 = 0; } while (i &lt; argc) do {
+    std::io::printf(c&quot;  argv[%d] = %s\n&quot;, i, argv.(i));
+  }
+
+  return 0;
+}
+</code></pre><p>From this comparison, I guess it is clear that:</p>
+<ul>
+<li>the general concept of IM/C is very close to C;</li>
+<li>everything is made more explicit than implicit, e.g. the type system with array and pointer;</li>
+<li>some features could be exotic to those C-alike-family of languages, e.g. using <code>loop ... with ... while ... do</code> to replace <code>for</code> and <code>while</code>, and using <code>array.1</code> or <code>array.(i)</code> to access the elements instead of using <code>array[1]</code> or <code>array[i]</code>.</li>
+</ul>
+<p>This is motivated by the fact that I&#39;d like to keep the syntax as explicit as possible, and as unified as possible. Each an every keyword should clearly say what it is doing, and each symbol should only have one single meaning. For example:</p>
+<ul>
+<li><code>&lt;</code> and <code>&gt;</code> are just going to be greater than and less than, not brackets for type parameters; </li>
+<li><code>*</code> will only be used for multiply, instead of also being used as access value;</li>
+<li><code>.</code> will be used for accessing fields, no matter for structs or arrays.</li>
+</ul>
+<p>I believe this will help us to get rid of a lot of ambigiouity not only for the source code, but also for the language implementation.</p>
+<p>Currently, there is still no stable feature set for the new language yet. Everything is still going through a try-and-fail-process. But I personally have hope in it. I believe, it will become my &quot;go-to&quot; language for most of my hobby projects in the future.</p>
+
+</article>
+    </main>
+
+    <hr class="splitter" />
+
+    <footer class="footer">
+      <p class="footer__copyright">
+        ©2025 Path Undefined. All Rights Reserved.
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>

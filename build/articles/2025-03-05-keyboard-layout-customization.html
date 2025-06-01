@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keyboard Layout Customization | Path Undefined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/github.min.css">
+</head>
+
+<body>
+  <div class="site">
+    <header class="header">
+      <div class="site-title">
+        Path Undefined
+      </div>
+      <div class="one-sentence">
+        — An undefined path of life.
+      </div>
+
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a class="nav__link" href="/">
+              Newest
+            </a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="/archive.html">
+              Archive
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <hr class="splitter" />
+
+    <main class="main">
+      <article>
+  <h1>Keyboard Layout Customization</h1>
+<p>The letters on my old keyboard is getting off again. I haven&#39;t even used it for several months and I can&#39;t even remember how many keyboards I have thrown away out of this reason. Those Germen say, &quot;the one who buys cheap has to buy twice&quot;. That&#39;s true and it is such a waste. This is not the life-style I wanted to have. I prefer keep one thing for a long time, instead of changing it from time to time. Even though nowadays, keeping disposing cheap products and buy new ones could be a more economical choice.</p>
+<p>With this thought in mind, I have decided to build a custom keyboard with a set of high quality keycaps. I went for Akko 5075 DIY kit, and used Akko V3 Creamy Purple switches. For the key caps, I have ordered a set with XDA profile.</p>
+<p>But then I noticed that since the keycaps are in XDA profile, they are in the same height in different rows, which means I can put a key anywhere I want. That means, I can change the keyboard layout to whatever I want. Since I&#39;m &quot;building&quot; a keyboard anyways, why not building the layout for the keyboard too?</p>
+<p>I&#39;m already used to QWERTY-Layout, but it doesn&#39;t mean that I&#39;m satisfied with it. My biggest problem is the position of the keys &quot;d&quot;, &quot;e&quot;, &quot;c&quot; and &quot;x&quot;. If I type something like &quot;exceeded&quot; or &quot;succeeded&quot;, it is always one of my finger moving back and forth, or two fingers sqeezing each other to try to get another out of their way. Beside that, the &quot;y&quot; key, although used very often, is being put at a position which is very hard to reach. These two facts has lowered my typing speed and typing experiences dramatically.</p>
+<p>So, my goal is to design a keyboard layout that fit my own typing style and my own language usage to increase typing speed and typing experiences as much as possible.</p>
+<p>I have a rough plan. First I shall gather all the information of the key rates and also the bigram frequencies in different languages I&#39;m using. And then I should record the typing lattency of all the possible bigrams of latin letters. Based on these 2 sets of data, I would be able to evaluate the layout. And then the goal is to find the perfect layout to minimalize the overall lattency. After that, I only need to find the layout with the lowest lattency.</p>
+<p>For the first set of data, it is relatively simple. There are different researches already out there about the frequencies of the words in a certain languages. For example:</p>
+<ul>
+<li>English: <a href="https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000">https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000</a></li>
+<li>Chinese: <a href="https://lingua.mtsu.edu/chinese-computing/phonology/syllable.php">https://lingua.mtsu.edu/chinese-computing/phonology/syllable.php</a></li>
+<li>German: <a href="https://en.wiktionary.org/wiki/User:Matthias_Buchmeier#German_frequency_list">https://en.wiktionary.org/wiki/User:Matthias_Buchmeier#German_frequency_list</a></li>
+</ul>
+<p>For each of the languages, I calculated the key and bigram frequencies separately. After that, I normalised those frequencies, so that the values are not influenced by the different sample bases for different languages.</p>
+<p>In the next step, I put different weights on different languages, which is: Chinese 2, English 3 and German 1. This roughly reflexes the amount that I type in different languages. With those weights, I have calculated the weighted average frequecies of each keys and bigrams.</p>
+<p>To record the bigram typing lattency, I wrote a key speed recorder program. It will generate all possible bigrams and choose one randomly. I have to type each bigram 20 times as fast as I can, so that the average lattencies can be calculated. That is 26 letters including semi-colon, which is 27 keys. And there is 27 * 27 = 729 possible bigrams. It took me several hours to finish the recording work.</p>
+<p>With the information being gathered, I thought it should be easy to design the keyboard now. I just go through all the layout possibilities and find the one with the lowest lattency and call it a day, right? No! There is 27! = 1.089e+28 possibilities. To figure out the latency for each and every possible layout would take a huge amount of time. I have to find a better algorithm for it.</p>
+<p>At first, I thought about something in the direction of greedy strategy. Based on the randomly generated keyboard layouts, the program will randomly change one key pairs. If the result is better, I will keep the changed version. But if not, it will chang another pair, until there is no pairs to be changed.</p>
+<p>The algorithm was efficient, but it only finds local minimum. Soon I got a huge amount of different results being claimed as &quot;the best&quot;, but actually they are just a bunch of &quot;local valleys&quot;. There must be a mechanism to bring this algorithm out of the local valley. And the best algorithm that was in my mind is the so called &quot;genetic algorithm&quot;.</p>
+<p>Genetic algorithm is inspired by how the genes are woking in the real world. I was using a slightly modified version of it. At the beginning, a set of randomly generated layouts will be created. And then it enters a loop. In each of the iteration, the program will ranomly divide them into groups of two, so that they can &quot;pair&quot; with each other. For each pair of parent, it mixs random features, which is in my case the position of the keys, from both of the parent. And based on the features and some randomness, their &quot;child&quot; would be created. The child will then go through the local best algorithm again, so that it &quot;grows up&quot;, and finally, the programm will select the best results as survivors for the base for the next iteration.</p>
+<p>This algorithm works like a charm. After 70 to 80 iterations, the result will become relatively stable. And if I try it several times, the result stays the same. It is very likely that I have found the global best! The best layouts looks like this:</p>
+<pre><code class="hljs">w v r h m   k g o u ;
+l s n d f   p t i a e
+q b j y x   z c
+
+x v w h l   k g o u ;
+r s n d f   p t i a e
+q b m y j   z c
+
+w k r h m   q g o u ;
+l s n d f   p t i a e
+v b j y x   z c
+
+x k w h m   q g u o ;
+r s n d f   p t i a e
+v b l y j   z c
+
+x w r h m   k g o u ;
+l s n d f   p t i a e
+q v b y j   z c
+</code></pre><p>Although they are probably the global bests based on the statistic data, I liked none of them. Most of them has big issues. E.g., the bigrams like &quot;ck&quot;, &quot;tion&quot;, &quot;rn&quot;, &quot;bs&quot; and those in Chinese pinyin &quot;ua&quot; will still cause trouble in all of those layouts.</p>
+<p>After having played with the statistic data and the algorithm for quite a while, my learnings were:</p>
+<ul>
+<li>slightly different data from the experiment will cause huge difference of the keyboard layout.</li>
+<li>putting all the vowels at the upper right corner seems to be a very good practice, because the vowels will appear in all the words, and they will mostly be conbined with other consonances on the other hand. An typing left right hand alternately is according to the experience resulting in lowest typing lattency.</li>
+<li>the algorithm is to find the overall lowerest typing lattency based on the statistic data. But my goal with the perfect layout seems to be shifted to avoid single finger bigram as much as possible. However, it mismatches the goal of the algorithm.</li>
+</ul>
+<p>The approach have to be changed completely.</p>
+<p>I abandoned the recorded bigram typing latency data, and try to find a clustering strategy to divide keys into 3-3-3-6-6-2-2-1 groups, each group is corresponding to the keys being pressed by a single finger. The best clustering strategy is to keep the overall chance of single finger bigram as low as possible. This was being achieved simply by modifying the evaluation part of the code.</p>
+<p>The result was:</p>
+<pre><code class="hljs">i; oe vu ypgwcf dkmbtj lhn srz qxa
+
+q s l d k   y p o v i
+x r h m b   g w e u ;
+a z n t j   c f
+</code></pre><p>Based on this result, I can further figure out how the layout should exactly be by moving keys around. If I move a key, I should only move it within a group, so that the key is still being typed with the same finger; or move a whole group to another place where the group can fit in, so that this group of keys will be typed by another finger completely. After sevral hands-on tests, I found my personal favorite, and it also becomes the layout that I&#39;m currently using.</p>
+<pre><code class="hljs">j r h w p   q k o v ;
+a s n g y   b t e u i
+x z l c f   m d , .
+</code></pre><p>Since the keys on the left-hand home-row are &quot;A&quot;, &quot;S&quot;, &quot;N&quot;, &quot;G&quot; and &quot;Y&quot;. I call this layout ASNGY (pronounced as &quot;assengy&quot;).</p>
+<p>I have tested the layout, and I&#39;m very happy with it. There is a <a href="https://colemakmods.github.io/mod-dh/analyze.html">keyboard layout evaluating website</a>. I have tried it with ASNGY, and the result is 1.879, which is slightly better than Halmak. Although not the best among all layouts, I&#39;m very satisfied with this reult, since these results only apply to English language. In Chinese Pinyin, there is a very high rate of vowel combinations like &quot;ue&quot;, &quot;ua&quot;, but most of the other layouts tend to pile up vowels together, which will still causing a lot of single finger bigram problems. But in my current design, the only piled up vowels are &quot;e&quot; and &quot;o&quot;, which is seldomly coming up in a roll in Chinese.</p>
+<p>Since the keycaps will come later, I can&#39;t test the layout yet on my newly built keyboard, so I rearranged the keys on my laptop so that I could start practising it.</p>
+<p>The only problem now is that I&#39;m too used to QWERTY. Now my typing speed with ASNGY is about 13 WPM, compairing to QWERTY at 90 WPM, there is still a long way to go. But I believe, since QWERTY got a score of 2.4 on the layout evaluation website. The WPM with ASNGY passing over QWERTY is just a matter of time.</p>
+
+</article>
+    </main>
+
+    <hr class="splitter" />
+
+    <footer class="footer">
+      <p class="footer__copyright">
+        ©2025 Path Undefined. All Rights Reserved.
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>
