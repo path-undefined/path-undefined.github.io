@@ -83,13 +83,7 @@ func main(argc: int32, argv: arr[ptr[char]]): int {
 <li>everything is made more explicit than implicit, e.g. the type system with array and pointer;</li>
 <li>some features could be exotic to those C-alike-family of languages, e.g. using <code>loop ... with ... while ... do ... then</code> to unify and replace <code>for</code>, <code>while</code> and <code>do ... while</code>, and using <code>array.1</code> or <code>array.(i)</code> to access the elements instead of using <code>array[1]</code> or <code>array[i]</code>.</li>
 </ul>
-<p>This is motivated by the fact that I&#39;d like to keep the syntax as explicit as possible, and as unified as possible. Each an every keyword should clearly say what it is doing, and each symbol should only have one single meaning. For example:</p>
-<ul>
-<li><code>&lt;</code> and <code>&gt;</code> are just going to be greater than and less than, not brackets for type parameters; </li>
-<li><code>*</code> will only be used for multiply, instead of also being used as access value;</li>
-<li><code>.</code> will be used for accessing fields, no matter for structs or arrays.</li>
-</ul>
-<p>I believe this will help us to get rid of a lot of ambigiouity not only for the source code, but also for the language implementation.</p>
+<p>This is motivated by the fact that I&#39;d like to keep the syntax as explicit as possible, and as unified as possible. Each an every keyword should clearly say what it is doing, and each symbol should only have one single meaning. I believe this will help us to get rid of a lot of ambigiouity not only for the source code, but also for the language implementation.</p>
 <p>Currently, there is still no stable feature set for the new language yet. Everything is still going through a try-and-fail-process. But I personally have hope in it. I believe, it will become my &quot;go-to&quot; language for most of my hobby projects in the future.</p>
 
 </article>
